@@ -21,6 +21,7 @@ You can explore the live app here:
 ## 📚 Project Structure
 
 - `/Data` – CSV files containing conference proceedings data (2015–2024)
+- `/Modules` – Python scripts used for visualizations
 - `/assets` – Images and logos used for visualizations
 - `app.ipynb` – Main Jupyter Notebook used to build the application
 - `requirements.txt` – Python dependencies
