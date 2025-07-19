@@ -1,6 +1,12 @@
 import streamlit as st
 import pandas as pd
 
+# Import Utils Scripts
+from Modules.Utils.get_text_to_embed import prepare_text
+
+df = prepare_text(df, method="title")
+
+
 # This tells Streamlit to load the file only once and reuse it
 @st.cache_data
 def load_data():
