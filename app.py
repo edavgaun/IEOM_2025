@@ -7,6 +7,10 @@ import numpy as np
 from Modules.Utils.get_text_to_embed import prepare_text
 from Modules.Utils.get_embeddings import get_embeddings
 
+# Import Chart Scripts
+from Modules.Charts.umap_projection import get_umap_projection
+from Modules.Charts.plot_umap import plot_umap_scatter
+
 # This tells Streamlit to load the file only once and reuse it
 @st.cache_data
 def load_data():
@@ -20,6 +24,11 @@ def load_embeddings():
 
 # Generate embeddings using the selected LLM model
 embeddings = load_embeddings()
+embedding_2d = get_umap_projection(embeddings)
+
+# Add to df
+df["x"] = embedding_2d[:, 0]
+df["y"] = embedding_2d[:, 1]
 
 # Layout setup
 st.set_page_config(layout="wide")
@@ -52,7 +61,7 @@ st.markdown("""
 - Use the **tabs** below to switch between different types of visual analyses.
 - Each tab allows different types of filtering so make sure to familiarize yourself with them first.
 - **Paper Overview** shows Conference Proceedings raw abstracts and metadata.
-- **Word Cloud** and **Bubble Chart** let you explore keyword frequencies.
+- **UMAP Projection** lets you explore papers in a 2D dimensional space.
 - The **Network Graph** shows term co-occurrence.
 - Use the **Radar Charts** to compare keyword relevance across two years.
 - The **Bump Chart** tracks top keywords over time.
@@ -64,7 +73,7 @@ st.markdown("""
 # Tabs
 tabs = st.tabs([
     "📄 Paper Overview",
-    "☁️ Word Cloud & Bubble Chart",
+    "🧭 UMAP Projection",
     "🌐 Co-occurrence Network",
     "📊 Radar Charts",
     "📈 Bump Chart",
@@ -74,3 +83,18 @@ tabs = st.tabs([
 st.markdown("<hr style='margin-top: -10px;'>", unsafe_allow_html=True)
 st.write(f"Loaded {embeddings.shape[0]} embeddings of dimension {embeddings.shape[1]}.")
 
+with tabs[1]:
+    st.subheader("🧭 UMAP Embedding Explorer")
+    
+    # Filters
+    selected_years = st.multiselect(
+        "Select Years", sorted(df["Year"].unique()), default=sorted(df["Year"].unique())
+    )
+
+    selected_conferences = st.multiselect(
+        "Select Conferences", sorted(df["Conference"].unique()), default=sorted(df["Conference"].unique())
+    )
+
+    # Plot
+    fig = plot_umap_scatter(df, selected_years=selected_years, selected_conferences=selected_conferences)
+    st.plotly_chart(fig, use_container_width=True)
