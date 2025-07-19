@@ -1,6 +1,10 @@
 import pandas as pd
 import plotly.express as px
 
+@st.cache_data
+def filter_df(df, selected_years, selected_conferences):
+    return df[df["Year"].isin(selected_years) & df["Conference"].isin(selected_conferences)]
+
 def plot_umap_scatter(
     df: pd.DataFrame,
     selected_years=None,
@@ -23,13 +27,7 @@ def plot_umap_scatter(
     plotly.graph_objects.Figure
         Interactive scatterplot.
     """
-    if selected_years:
-        df = df[df["Year"].isin(selected_years)]
-
-    if selected_conferences:
-        df = df[df["Conference"].isin(selected_conferences)]
-
-    df = df.copy()
+    df=filter_df(df, selected_years, selected_conferences)
     df["Year"] = df["Year"].astype(str)
 
     fig = px.scatter(
