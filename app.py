@@ -39,9 +39,6 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Load the data
-df = load_data()
-
 # Show the number of papers loaded
 st.title("📊 IEOM 2025 Explorer")
 st.caption("📘 Based on: Edgar Avalos-Gauna; (2025), *15 Years of IEOM Proceedings*")
@@ -75,4 +72,5 @@ tabs = st.tabs([
 ])
 
 st.markdown("<hr style='margin-top: -10px;'>", unsafe_allow_html=True)
+st.write(f"Loaded {embeddings.shape[0]} embeddings of dimension {embeddings.shape[1]}.")
 
