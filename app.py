@@ -1,5 +1,7 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
+
 
 # Import Utils Scripts
 from Modules.Utils.get_text_to_embed import prepare_text
