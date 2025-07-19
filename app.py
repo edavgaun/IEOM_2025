@@ -17,7 +17,7 @@ def load_embeddings():
     return np.load("Data/ieom_embeddings.npy")
 
 # Generate embeddings using the selected LLM model
-embeddings = load_embeddings(texts)
+embeddings = load_embeddings()
 
 # Layout setup
 st.set_page_config(layout="wide")
