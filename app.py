@@ -3,14 +3,21 @@ import pandas as pd
 
 # Import Utils Scripts
 from Modules.Utils.get_text_to_embed import prepare_text
-
-df = prepare_text(df, method="title")
-
+from Modules.Utils.get_embeddings import get_embeddings
 
 # This tells Streamlit to load the file only once and reuse it
 @st.cache_data
 def load_data():
     return pd.read_json("Data/ieom_full.json.gz", compression="gzip")
+
+df = load_data()
+
+# Prepare the text for embedding
+df = prepare_text(df, method="title")
+texts = df["text_to_embed"].tolist()
+
+# Generate embeddings using the selected LLM model
+embeddings = get_embeddings(texts)
 
 # Layout setup
 st.set_page_config(layout="wide")
