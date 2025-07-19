@@ -8,7 +8,6 @@ from Modules.Utils.get_text_to_embed import prepare_text
 from Modules.Utils.get_embeddings import get_embeddings
 
 # Import Chart Scripts
-from Modules.Charts.umap_projection import get_umap_projection
 from Modules.Charts.plot_umap import plot_umap_scatter
 
 # This tells Streamlit to load the file only once and reuse it
@@ -17,18 +16,6 @@ def load_data():
     return pd.read_json("Data/ieom_full.json.gz", compression="gzip")
 
 df = load_data()
-
-@st.cache_data
-def load_embeddings():
-    return np.load("Data/ieom_embeddings.npy")
-
-# Generate embeddings using the selected LLM model
-embeddings = load_embeddings()
-embedding_2d = get_umap_projection(embeddings)
-
-# Add to df
-df["x"] = embedding_2d[:, 0]
-df["y"] = embedding_2d[:, 1]
 
 # Layout setup
 st.set_page_config(layout="wide")
