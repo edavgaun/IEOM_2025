@@ -3,6 +3,7 @@ import pandas as pd
 from sklearn.decomposition import PCA
 import umap
 
+@st.cache_data
 def get_umap_projection(embeddings: np.ndarray, n_components_pca: int = 120, random_state: int = 42):
     """
     Reduce high-dimensional embeddings to 2D using PCA followed by UMAP.
