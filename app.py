@@ -72,7 +72,7 @@ st.write(f"Loaded {embeddings.shape[0]} embeddings of dimension {embeddings.shap
 
 with tabs[1]:
     st.subheader("🧭 UMAP Embedding Explorer")
-    
+
     # Filters
     selected_years = st.multiselect(
         "Select Years", sorted(df["Year"].unique()), default=sorted(df["Year"].unique())
