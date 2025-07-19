@@ -12,12 +12,12 @@ def load_data():
 
 df = load_data()
 
-# Prepare the text for embedding
-df = prepare_text(df, method="title")
-texts = df["text_to_embed"].tolist()
+@st.cache_data
+def load_embeddings():
+    return np.load("Data/ieom_embeddings.npy")
 
 # Generate embeddings using the selected LLM model
-embeddings = get_embeddings(texts)
+embeddings = load_embeddings(texts)
 
 # Layout setup
 st.set_page_config(layout="wide")
