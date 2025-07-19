@@ -36,9 +36,8 @@ def plot_umap_scatter(
         df,
         x="x",
         y="y",
-        symbol="Conference",
         color="Year",
-        hover_data={"x": False, "y": False, "Title": True, "Year": True},
+        hover_data={"x": False, "y": False, "Title": True, "Conference": True, "Year": True},
         opacity=0.65
     )
     fig.update_layout(
