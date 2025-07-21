@@ -102,7 +102,7 @@ with tabs[0]:
 
     # ROW 2
     with st.container():
-        col1, col2, col3 = st.columns([1, 2, 2])
+        col1, col2, col3 = st.columns([1, 2, 3])
 
         with col1:
             st.markdown("##### 📊 Identified Papers by Region")
@@ -110,62 +110,26 @@ with tabs[0]:
 
         # cols 2 & 3 continue dataframe or remain empty if not needed
         with col2:
-            st.empty()
+            st.markdown("##### 📊 Identified Papers by Region")
+            st.image("assets/Paper submissions.png", use_container_width=True)
 
         with col3:
-            st.empty()
+            st.markdown("##### 📊 Paper Extraction Rate")
+            st.image("assets/pct of papers.png", use_container_width=True)
 
     # ROW 3
     with st.container():
         col1, col2, col3 = st.columns([1, 2, 2])
 
         with col1:
-            st.markdown("##### 📊 Paper Extraction Rate")
-            st.image("assets/pct of papers.png", use_container_width=True)
-
-        with col2:
             st.markdown("### 🔢 Word Frequency Controls")
             top_n = st.slider("Top N words", min_value=5, max_value=50, value=20, step=1)
             remove_stopwords = st.checkbox("Remove custom stopwords", value=True)
 
-        with col3:
+        with col2:
             st.markdown("### 🔤 Word Frequency Chart")
 
-            # Build frequency chart
-            import re
-            from collections import Counter
-            from nltk.corpus import stopwords
-            import altair as alt
-
-            # If you have your own stopwords, load here
-            try:
-                with open("Data/own_stopwords.txt", "r") as f:
-                    own_stopwords = set(word.strip() for word in f.readlines())
-            except:
-                own_stopwords = set()
-
-            text = " ".join(df_slice["Paper"].dropna().astype(str).tolist()).lower()
-            tokens = re.findall(r'\b[a-z]{3,}\b', text)
-
-            stop_words = set(stopwords.words("english"))
-            if remove_stopwords:
-                stop_words = stop_words.union(own_stopwords)
-
-            words = [w for w in tokens if w not in stop_words]
-            word_freq = Counter(words).most_common(top_n)
-            freq_df = pd.DataFrame(word_freq, columns=["Word", "Frequency"])
-
-            chart = alt.Chart(freq_df).mark_bar().encode(
-                x=alt.X("Word:N", sort="-y"),
-                y=alt.Y("Frequency:Q"),
-                tooltip=["Word", "Frequency"]
-            ).properties(
-                width=400,
-                height=300,
-                title=f"Top {top_n} Words in Selected Papers"
-            )
-
-            st.altair_chart(chart, use_container_width=True)
+            
 
 
 # Second Tab
