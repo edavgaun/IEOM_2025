@@ -68,21 +68,99 @@ st.write(f"{df.shape[0]:,} Papers from 10 Regions (≤9 Editions)")
 with tabs[0]:
     st.subheader("📄 Paper Overview")
 
-    # Row 1
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown("##### Number of Papers Successfully Identified by Region Across IEOM Editions (Min–Avg–Max)")
-        st.image("assets/Paper submissions.png", use_container_width=True)
-    with col2:
-        st.markdown("**[Placeholder]** Add another image, metric, or summary text here.")
+    # ROW 1
+    with st.container():
+        col1, col2, col3 = st.columns([1, 2, 2])
 
-    # Row 2
-    col3, col4 = st.columns(2)
-    with col3:
-        st.markdown("##### Percentage of Papers Successfully Scraped from IEOM Website")
-        st.image("assets/pct of papers.png", use_container_width=True)
-    with col4:
-        st.markdown("**[Placeholder]** Add another chart or visual explanation.")
+        with col1:
+            st.markdown("### ⚙️ Settings")
+
+            year = st.selectbox("Select Year", sorted(df["Year"].unique()), key="ieom_year")
+            df_year = df[df["Year"] == year]
+
+            max_rows = len(df_year)
+            row_range = st.slider(
+                "Select row range", 0, max_rows - 1,
+                value=(0, min(10, max_rows - 1)),
+                key="ieom_row_slider"
+            )
+            df_slice = df_year.iloc[row_range[0]:row_range[1] + 1]
+
+        with col2:
+            st.markdown("### 📑 Papers Found")
+            st.dataframe(df_slice[["Title", "KeyWords", "Abstract", "Paper"]], use_container_width=True)
+
+        with col3:
+            st.markdown("### 🧾 Metadata")
+            st.dataframe(df_slice[["Region", "Conference", "FinalTopicName", "Year"]], use_container_width=True)
+
+    # ROW 2
+    with st.container():
+        col1, col2, col3 = st.columns([1, 2, 2])
+
+        with col1:
+            st.markdown("##### 📊 Identified Papers by Region")
+            st.image("assets/Paper submissions.png", use_container_width=True)
+
+        # cols 2 & 3 continue dataframe or remain empty if not needed
+        with col2:
+            st.empty()
+
+        with col3:
+            st.empty()
+
+    # ROW 3
+    with st.container():
+        col1, col2, col3 = st.columns([1, 2, 2])
+
+        with col1:
+            st.markdown("##### 📊 Paper Identification Rate")
+            st.image("assets/pct of papers.png", use_container_width=True)
+
+        with col2:
+            st.markdown("### 🔢 Word Frequency Controls")
+            top_n = st.slider("Top N words", min_value=5, max_value=50, value=20, step=1)
+            remove_stopwords = st.checkbox("Remove custom stopwords", value=True)
+
+        with col3:
+            st.markdown("### 🔤 Word Frequency Chart")
+
+            # Build frequency chart
+            import re
+            from collections import Counter
+            from nltk.corpus import stopwords
+            import altair as alt
+
+            # If you have your own stopwords, load here
+            try:
+                with open("Data/own_stopwords.txt", "r") as f:
+                    own_stopwords = set(word.strip() for word in f.readlines())
+            except:
+                own_stopwords = set()
+
+            text = " ".join(df_slice["Paper"].dropna().astype(str).tolist()).lower()
+            tokens = re.findall(r'\b[a-z]{3,}\b', text)
+
+            stop_words = set(stopwords.words("english"))
+            if remove_stopwords:
+                stop_words = stop_words.union(own_stopwords)
+
+            words = [w for w in tokens if w not in stop_words]
+            word_freq = Counter(words).most_common(top_n)
+            freq_df = pd.DataFrame(word_freq, columns=["Word", "Frequency"])
+
+            chart = alt.Chart(freq_df).mark_bar().encode(
+                x=alt.X("Word:N", sort="-y"),
+                y=alt.Y("Frequency:Q"),
+                tooltip=["Word", "Frequency"]
+            ).properties(
+                width=400,
+                height=300,
+                title=f"Top {top_n} Words in Selected Papers"
+            )
+
+            st.altair_chart(chart, use_container_width=True)
+
 
 # Second Tab
 with tabs[1]:
