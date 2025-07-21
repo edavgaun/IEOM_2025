@@ -63,23 +63,26 @@ tabs = st.tabs([
 
 st.markdown("<hr style='margin-top: -10px;'>", unsafe_allow_html=True)
 st.write(f"{df.shape[0]:,} Papers from 10 Regions (≤9 Editions)")
+
+# First Tab
 with tabs[0]:
     st.subheader("📄 Paper Overview")
 
     # Row 1
     col1, col2 = st.columns(2)
     with col1:
-        st.image("assets/Paper submissions.png", use_column_width=True, caption="IEOM Paper Submission Trend")
+        st.image("assets/Paper submissions.png", use_container_width=True, caption="IEOM Paper Submission Trend")
     with col2:
         st.markdown("**[Placeholder]** Add another image, metric, or summary text here.")
 
     # Row 2
     col3, col4 = st.columns(2)
     with col3:
-        st.image("assets/pct of papers.png", use_column_width=True, caption="IEOM Paper Submission Trend")
+        st.image("assets/pct of papers.png", use_container_width=True, caption="Percentage of Papers by Region")
     with col4:
         st.markdown("**[Placeholder]** Add another chart or visual explanation.")
 
+# Second Tab
 with tabs[1]:
     st.subheader("🧭 UMAP Embedding Explorer")
 
