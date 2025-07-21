@@ -81,9 +81,13 @@ with tabs[1]:
     selected_conferences = st.multiselect(
         "Select Conferences", sorted(df["Conference"].unique()), default=sorted(df["Conference"].unique())
     )
+    
+    selected_topics = st.multiselect(
+        "Select Topics", options=df["FinalTopicName"].unique(), default=df["FinalTopicName"].unique()
+    )
 
     # Plot
-    fig, filt_df = plot_umap_scatter(df, selected_years=selected_years, selected_conferences=selected_conferences)
+    fig, filt_df = plot_umap_scatter(df, selected_years=selected_years, selected_conferences=selected_conferences, selected_topics=selected_topics)
     # Add centroids afterward
     fig = add_centroids_to_umap(fig, filt_df)
     st.plotly_chart(fig, use_container_width=True)
