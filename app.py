@@ -81,7 +81,7 @@ with tabs[0]:
             df_conf = df[df["Conference"] == conf]
             
             year = st.selectbox("Select Year", sorted(df_conf["Year"].unique()), key="ieom_year")
-            df_year = df[df["Year"] == year]
+            df_year = df_conf[df_conf["Year"] == year]
 
             max_rows = len(df_year)
             row_range = st.slider(
