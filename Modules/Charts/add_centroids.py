@@ -24,8 +24,12 @@ def add_centroids_to_umap(fig, df, x_col="x", y_col="y", year_col="Year"):
         Updated figure with centroid crosses and static labels.
     """
     # Get color mapping from existing traces
-    color_map = {trace.name: trace.marker.color for trace in fig.data if trace.name and trace.marker.color}
-
+    year_colors = {}
+    for trace in fig.data:
+        if trace.name:
+            year = trace.name.strip()
+            year_colors[year] = trace.marker.color
+        
     # Compute centroids per year
     for year in df[year_col].unique():
         sub_df = df[df[year_col] == year]
@@ -35,9 +39,8 @@ def add_centroids_to_umap(fig, df, x_col="x", y_col="y", year_col="Year"):
         centroid_x = sub_df[x_col].mean()
         centroid_y = sub_df[y_col].mean()
 
-        # Try to find color from one of the traces (fallback to black)
-        trace_name = year if year in color_map else f"Year={year}"
-        color = color_map.get(trace_name, "black")
+        # Try to find color
+        color = year_colors.get(str(year), "black")
 
         fig.add_trace(go.Scatter(
             x=[centroid_x],
@@ -46,6 +49,7 @@ def add_centroids_to_umap(fig, df, x_col="x", y_col="y", year_col="Year"):
             marker=dict(symbol="x", size=16, color=color, line=dict(width=2)),
             text=[year],
             textposition="top center",
+            textfont=dict(color=color, size=12),
             showlegend=False,
             hoverinfo="skip"
         ))
