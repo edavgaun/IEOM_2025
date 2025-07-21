@@ -78,7 +78,7 @@ with tabs[0]:
     # Row 2
     col3, col4 = st.columns(2)
     with col3:
-        st.markdown("## Percentage of Papers Successfully Scraped from IEOM Website")
+        st.markdown("##### Percentage of Papers Successfully Scraped from IEOM Website")
         st.image("assets/pct of papers.png", use_container_width=True, caption="Percentage of Papers by Region")
     with col4:
         st.markdown("**[Placeholder]** Add another chart or visual explanation.")
