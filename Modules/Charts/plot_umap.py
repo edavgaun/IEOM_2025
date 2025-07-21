@@ -42,7 +42,7 @@ def plot_umap_scatter(
     )
     fig.update_layout(
     height=800,
-    title="UMAP Projection of IEOM Papers Across Conference Regions and Years<br><span style='font-size:14px; font-weight:normal'>(Tools to control and use the visual can be found on the upper right corner of the chart  → )</span>",
+    title="UMAP Projection of IEOM Papers Across Conference Regions and Years<br><span style='font-size:14px; font-weight:normal'>(Additional tools to control and use the visual can be found on the upper right corner of the chart  → )</span>",
     legend_title_text="Year and Conference",
     xaxis_title=None,
     yaxis_title=None,
