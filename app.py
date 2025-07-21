@@ -89,7 +89,8 @@ with tabs[0]:
                 value=(0, min(10, max_rows - 1)),
                 key="ieom_row_slider"
             )
-            df_slice = df_year.iloc[row_range[0]:row_range[1] + 1]
+            # Set the index to reflect actual position in df_year (e.g., row 50–60)
+            df_slice.index = list(range(row_range[0], row_range[1] + 1))
 
         with coldf:
             st.markdown("### 📑 Papers Found")
