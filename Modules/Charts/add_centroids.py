@@ -82,7 +82,7 @@ def add_centroids_to_umap(
         fig.add_annotation(
         xref="paper",
         yref="paper",
-        x=0.75,
+        x=0.775,
         y=1.01,
         text=(
         "Dashed lines indicate the semantic center<br>"
