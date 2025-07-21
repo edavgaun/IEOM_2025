@@ -149,7 +149,7 @@ with tabs[0]:
 
         with col2:
             st.markdown("### 🔤 Word Frequency Chart")
-            bow_df_plot=bow_df.iloc[df_slice.index]
+            bow_df_plot = bow_df.loc[df_slice.index]
             freq_df = get_top_terms(bow_df_plot, top_n=top_n)
             chart = make_freq_chart(freq_df)
             st.altair_chart(chart, use_container_width=True)
