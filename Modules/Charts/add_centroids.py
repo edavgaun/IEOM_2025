@@ -84,7 +84,7 @@ def add_centroids_to_umap(
         yref="paper",
         x=0.775,
         y=1.01,
-        text=( .
+        text=(
         "Dashed lines show the average position of <br>"
         " ← papers per year(semantic centroid),<br>" 
         "illustrating how topics shift over time."
