@@ -91,9 +91,3 @@ with tabs[1]:
     # Add centroids afterward
     fig = add_centroids_to_umap(fig, filt_df)
     st.plotly_chart(fig, use_container_width=True)
-    st.markdown(
-    "<div style='text-align: center; margin-top: -1.2rem; font-size: 0.9rem; color: gray;'>"
-    "Each dashed line shows the centroid of papers for that year (Paper Avg. Concentration)"
-    "</div>",
-    unsafe_allow_html=True
-    )
