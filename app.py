@@ -102,18 +102,19 @@ with tabs[0]:
 
     # ROW 2
     with st.container():
-        col1, col2, col3 = st.columns([2, 1, 1])
+        col1, col2, col3 = st.columns([1, 1, 1])
 
         with col1:
             st.markdown("""
-            ### 📊 Overview of IEOM Paper Identification and Coverage
+            ### 📊 IEOM Paper Identification Summary
             
-            The first chart illustrates the **number of papers successfully identified per region across IEOM editions**. Each region's line shows the **minimum, average, and maximum paper counts**, while the **dot size and color reflect conference maturity** (i.e., how many years that region has hosted an IEOM conference). For instance, the 'International' track shows the highest average and maturity, while other regions vary in both paper volume and consistency.
+            The first chart shows the number of papers identified per region, with min–avg–max lines and dot size/color indicating conference maturity. ‘International’ leads in both volume and consistency.
             
-            The second graphic provides a **visual summary of import success rates** for each region. Each row represents a region, where each icon reflects **5% of its total paper entries**. Green icons indicate successful paper identifications, and red icons show failures (due to broken links or missing data). Regions like 'Central' had major retrieval issues, while others such as 'North' and 'Asia' show strong coverage with minimal data loss.
+            The second chart shows paper extraction success. Each icon = 5% of entries. Green means successful, red indicates failures (e.g., broken links). Most regions have strong coverage — except 'Central', which had major data issues.
             
-            These visuals together highlight both the **breadth** and **reliability** of the dataset across global IEOM editions.
+            Together, these visuals highlight coverage depth and reliability across IEOM regions.
             """)
+
 
 
         # cols 2 & 3 show pictures related to the paper extraction process
