@@ -9,6 +9,7 @@ from Modules.Utils.get_embeddings import get_embeddings
 
 # Import Chart Scripts
 from Modules.Charts.plot_umap import plot_umap_scatter
+from Modules.Charts.add_centroids import add_centroids_to_umap
 
 # This tells Streamlit to load the file only once and reuse it
 @st.cache_data
@@ -91,4 +92,6 @@ with tabs[1]:
 
     # Plot
     fig = plot_umap_scatter(df, selected_years=selected_years, selected_conferences=selected_conferences)
+    # Add centroids afterward
+    fig = add_centroids_to_umap(fig, df)
     st.plotly_chart(fig, use_container_width=True)
