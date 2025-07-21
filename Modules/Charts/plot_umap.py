@@ -10,50 +10,51 @@ def filter_df(df, selected_years, selected_conferences, selected_topics):
         df["FinalTopicName"].isin(selected_topics)
     ]
 
-def plot_umap_scatter(
-    df: pd.DataFrame,
-    selected_years=None,
-    selected_conferences=None,
-    selected_topics=None
-):
-    """
-    Plot a 2D UMAP scatterplot with filtering and hover features.
-    """
+def plot_umap_scatter(df, selected_years=None, selected_conferences=None, selected_topics=None):
     df = filter_df(df, selected_years, selected_conferences, selected_topics)
     df["Year"] = df["Year"].astype(str)
 
-    # Define custom color palette (first is light gray for outliers)
-    custom_colors = [
-        "#d3d3d3",  # 0 - Light gray (Outliers)
-        "#1f77b4", "#ff7f0e", "#2ca02c", "#9467bd", "#8c564b",
-        "#e377c2", "#17becf", "#bcbd22", "#7f7f7f", "#4b0082",
-        "#ff1493", "#6a3d9a", "#ffcc00", "#009e73", "#e41a1c",
-        "#377eb8", "#f781bf", "#a65628", "#984ea3"
-    ]
+    # Get list of visible topics after filtering
+    visible_topics = df["FinalTopicName"].unique()
 
-    # Ensure "Outliers / Uncategorized" appears first in the color ordering
-    ordered_topics = sorted(
-        df["FinalTopicName"].unique(),
-        key=lambda x: (x != "Outliers / Uncategorized", x)
-    )
-    df["FinalTopicName"] = pd.Categorical(df["FinalTopicName"], categories=ordered_topics, ordered=True)
+    # Define full color map
+    full_color_map = {
+        "Outliers / Uncategorized": "#d3d3d3",
+        "Maintenance & Reliability Engineering": "#1f77b4",
+        "Sustainability & Green Supply Chains": "#ff7f0e",
+        "Industry 4.0 & Smart Manufacturing": "#2ca02c",
+        "Project & Construction Management": "#9467bd",
+        "Innovation & Entrepreneurship": "#8c564b",
+        "Machine Learning Methods": "#e377c2",
+        "Employee Behavior & Job Performance": "#17becf",
+        "3D Printing & Surface Engineering": "#7f7f7f",
+        "Renewable Energy & Power Systems": "#bcbd22",
+        "Vehicle Routing & Optimization Problems": "#4b0082",
+        "Ergonomics & Worker Safety": "#ff1493",
+        "TQM, ISO & Quality Management": "#6a3d9a",
+        "Inventory Control & Demand Forecasting": "#ffcc00",
+        "Public Policy & Government Programs": "#009e73",
+        "Learning, Students & Education": "#e41a1c",
+        "Lean Six Sigma & DMAIC": "#377eb8",
+        "Customer Experience & Brand Perception": "#f781bf",
+        "Supply Chain & Risk Assessment": "#a65628",
+        "Financial Markets & Corporate Finance": "#984ea3"
+    }
+
+    # Restrict color map to visible topics
+    filtered_color_map = {topic: full_color_map.get(topic, "#888888") for topic in visible_topics}
 
     fig = px.scatter(
         df,
         x="x",
         y="y",
         color="FinalTopicName",
-        color_discrete_sequence=custom_colors,
-        hover_data={
-            "x": False, "y": False,
-            "Title": True,
-            "Conference": True,
-            "Year": True,
-            "FinalTopicName": True
-        },
-        opacity=0.65
+        color_discrete_map=filtered_color_map,
+        hover_data={"Title": True, "Year": True, "Topic": True},
+        opacity=0.6
     )
 
+    # 🧠 Your original layout preserved
     fig.update_layout(
         height=800,
         title=(
