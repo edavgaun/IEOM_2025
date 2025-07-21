@@ -3,7 +3,7 @@ import pandas as pd
 
 def add_centroids_to_umap(fig, df, x_col="x", y_col="y", year_col="Year", padding=0.5):
     """
-    Add vertical dashed lines at centroid x-positions with vertically rotated year labels.
+    Add vertical dashed lines at centroid x-positions and label them with vertical year annotations.
 
     Parameters
     ----------
@@ -18,55 +18,54 @@ def add_centroids_to_umap(fig, df, x_col="x", y_col="y", year_col="Year", paddin
     year_col : str
         Column name for the year grouping.
     padding : float
-        Distance above the top of y-axis where the label will appear.
+        Vertical space above the plot used to place the year labels.
 
     Returns
     -------
     plotly.graph_objects.Figure
-        Updated figure with vertical dashed lines and rotated year labels.
+        Updated figure with vertical lines and properly rotated year labels.
     """
-    # Extract year-color mapping from original traces
+    # Get colors from existing figure
     year_colors = {}
     for trace in fig.data:
         if trace.name:
             year = trace.name.strip()
             year_colors[year] = trace.marker.color
 
-    # Get y-axis range for vertical line span and label position
+    # Y-axis range for dashed line and label height
     y_range = fig.layout.yaxis.range or [df[y_col].min(), df[y_col].max()]
-    y_bottom, y_top = y_range[0], y_range[1]
-    label_y = y_top + padding
+    y_min, y_max = y_range[0], y_range[1]
+    label_y = y_max + padding
 
     for year in df[year_col].unique():
         sub_df = df[df[year_col] == year]
-        if len(sub_df) == 0:
+        if sub_df.empty:
             continue
 
         centroid_x = sub_df[x_col].mean()
         color = year_colors.get(str(year), "black")
 
         # Add vertical dashed line
-        fig.add_trace(go.Scatter(
-            x=[centroid_x, centroid_x],
-            y=[y_bottom, y_top],
-            mode="lines",
+        fig.add_shape(
+            type="line",
+            x0=centroid_x,
+            x1=centroid_x,
+            y0=y_min,
+            y1=y_max,
             line=dict(color=color, width=2, dash="dash"),
-            showlegend=False,
-            hoverinfo="skip"
-        ))
+            layer="below"
+        )
 
-        # Add vertical year label (rotated)
-        fig.add_trace(go.Scatter(
-            x=[centroid_x],
-            y=[label_y],
-            mode="markers+text",
-            marker=dict(opacity=0),
-            text=[str(year)],
+        # Add vertical label using annotation
+        fig.add_annotation(
+            x=centroid_x,
+            y=label_y,
+            text=str(year),
+            showarrow=False,
             textangle=90,
-            textposition="top center",
-            textfont=dict(color=color, size=12),
-            showlegend=False,
-            hoverinfo="skip"
-        ))
+            font=dict(color=color, size=12),
+            xanchor="center",
+            yanchor="bottom"
+        )
 
     return fig
