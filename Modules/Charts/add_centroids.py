@@ -3,7 +3,7 @@ import pandas as pd
 
 def add_centroids_to_umap(fig, df, x_col="x", y_col="y", year_col="Year", padding=0.5):
     """
-    Add vertical dashed lines at centroid x-positions with year labels to an existing UMAP figure.
+    Add vertical dashed lines at centroid x-positions with vertically rotated year labels.
 
     Parameters
     ----------
@@ -23,7 +23,7 @@ def add_centroids_to_umap(fig, df, x_col="x", y_col="y", year_col="Year", paddin
     Returns
     -------
     plotly.graph_objects.Figure
-        Updated figure with vertical dashed lines and year labels at centroids.
+        Updated figure with vertical dashed lines and vertically rotated year labels.
     """
     # Extract year-color mapping from original traces
     year_colors = {}
@@ -32,9 +32,9 @@ def add_centroids_to_umap(fig, df, x_col="x", y_col="y", year_col="Year", paddin
             year = trace.name.strip()
             year_colors[year] = trace.marker.color
 
-    # Get y-axis range for drawing full-height vertical lines
+    # Get y-axis range to compute label position
     y_range = fig.layout.yaxis.range or [df[y_col].min(), df[y_col].max()]
-    y_top = y_range[1] + padding  # for label positioning
+    y_top = y_range[1] + padding
 
     for year in df[year_col].unique():
         sub_df = df[df[year_col] == year]
@@ -54,13 +54,13 @@ def add_centroids_to_umap(fig, df, x_col="x", y_col="y", year_col="Year", paddin
             hoverinfo="skip"
         ))
 
-        # Add year label above the top
+        # Add vertical year label
         fig.add_trace(go.Scatter(
             x=[centroid_x],
             y=[y_top],
             mode="text",
             text=[str(year)],
-            textposition="top center",
+            textangle=90,
             textfont=dict(color=color, size=12, family="Arial"),
             showlegend=False,
             hoverinfo="skip"
