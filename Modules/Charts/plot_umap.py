@@ -1,5 +1,7 @@
 import pandas as pd
 import plotly.express as px
+import streamlit as st
+
 
 @st.cache_data
 def filter_df(df, selected_years, selected_conferences):
