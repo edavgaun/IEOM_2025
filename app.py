@@ -86,11 +86,11 @@ with tabs[1]:
     fig, filt_df = plot_umap_scatter(df, selected_years=selected_years, selected_conferences=selected_conferences)
     # Add centroids afterward
     fig = add_centroids_to_umap(fig, filt_df)
+    st.caption('Tools to control and use the visual can be found on the upper right corner of the chart")
     st.plotly_chart(fig, use_container_width=True)
     st.markdown(
     "<div style='text-align: center; margin-top: -1.2rem; font-size: 0.9rem; color: gray;'>"
-    "Each dashed line shows where papers were most concentrated that year."
+    "Each dashed line shows the centroid of papers for that year (Paper Avg. Concentration)"
     "</div>",
     unsafe_allow_html=True
     )
-    st.caption("Each dashed line shows the centroid of papers for that year (Paper Avg. Concentration)")
