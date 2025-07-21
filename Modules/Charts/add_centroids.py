@@ -48,7 +48,6 @@ def add_centroids_to_umap(
     y_range = fig.layout.yaxis.range or [df[y_col].min(), df[y_col].max()]
     y_min, y_max = y_range[0], y_range[1]
     label_y = y_max + padding
-    Xmax=0.775
 
     # Iterate through unique years and plot vertical dashed lines + labels
     for year in sorted(df[year_col].unique()):
@@ -57,7 +56,6 @@ def add_centroids_to_umap(
             continue
 
         centroid_x = sub_df[x_col].mean()
-        Xmax=max(0.775, centroid_x)
 
         # Add vertical dashed line
         fig.add_shape(
@@ -84,7 +82,7 @@ def add_centroids_to_umap(
         fig.add_annotation(
         xref="paper",
         yref="paper",
-        x=max(0.5, Xmax),
+        x=0.9,
         y=1.01,
         text=(
         "Dashed lines show the average position of <br>"
