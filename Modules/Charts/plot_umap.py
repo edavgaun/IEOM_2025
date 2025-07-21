@@ -58,4 +58,4 @@ def plot_umap_scatter(
     plot_bgcolor='white'
     )
 
-    return fig
+    return fig, df
