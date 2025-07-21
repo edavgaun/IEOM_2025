@@ -82,11 +82,11 @@ def add_centroids_to_umap(
         fig.add_annotation(
         xref="paper",
         yref="paper",
-        x=0,
-        y=0.99,
+        x=0.7,
+        y=1,
         text=(
-        "Dashed lines indicate the semantic center<br>"
-        "(Paper Avg. Concentration) per year, → <br>" 
+        "Dashed lines indicate the semantic center<be>"
+        " ← (Paper Avg. Concentration) per year,<br>" 
         "showing topic drift over time."
         ),
         showarrow=False,
