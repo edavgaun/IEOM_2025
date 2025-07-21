@@ -20,13 +20,13 @@ def load_data():
 
 df = load_data()
 
-@st.cache_data
-def load_bow_df():
-    return pd.read_parquet("Data/ieom_bow.parquet")
+#@st.cache_data
+#def load_bow_df():
+#    return pd.read_parquet("Data/ieom_bow.parquet")
 
-def get_bow_slice(df_year, row_range):
-    bow_df = load_bow_df()
-    return bow_df.loc[df_year.index[row_range[0]:row_range[1]+1]]
+#def get_bow_slice(df_year, row_range):
+#    bow_df = load_bow_df()
+#    return bow_df.loc[df_year.index[row_range[0]:row_range[1]+1]]
 
 # Layout setup
 st.set_page_config(layout="wide")
@@ -151,10 +151,10 @@ with tabs[0]:
 
         with col2:
             st.markdown("### 🔤 Word Frequency Chart")
-            bow_df_slice = get_bow_slice(df_year, row_range)
-            freq_df = get_top_terms(bow_df_slice, top_n=top_n)
-            chart = make_freq_chart(freq_df)
-            st.altair_chart(chart, use_container_width=True)
+            #bow_df_slice = get_bow_slice(df_year, row_range)
+            #freq_df = get_top_terms(bow_df_slice, top_n=top_n)
+            #chart = make_freq_chart(freq_df)
+            #st.altair_chart(chart, use_container_width=True)
 
 
             
