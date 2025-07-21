@@ -50,7 +50,7 @@ def plot_umap_scatter(df, selected_years=None, selected_conferences=None, select
         y="y",
         color="FinalTopicName",
         color_discrete_map=filtered_color_map,
-        hover_data={"Title": True, "Year": True, "x": False, "y":False},
+        hover_data={"Title": True, "Year": True, "x": False, "y":False, 'Conference':True},
         opacity=0.6
     )
 
