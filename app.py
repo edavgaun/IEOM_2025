@@ -93,11 +93,11 @@ with tabs[0]:
 
         with col2:
             st.markdown("### 📑 Papers Found")
-            st.dataframe(df_slice[["Title", "Abstract", "KeyWords"]], use_container_width=True)
+            st.dataframe(df_slice[["Title", "Abstract", "Keywords"]], use_container_width=True)
 
         with col3:
             st.markdown("### 🧾 Metadata")
-            st.dataframe(df_slice[["Title", "Abstract", "KeyWords"]], use_container_width=True)
+            st.dataframe(df_slice[["Title", "Abstract", "Keywords"]], use_container_width=True)
 
     # ROW 2
     with st.container():
