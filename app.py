@@ -18,6 +18,7 @@ def load_data():
     return pd.read_json("Data/ieom_full.json.gz", compression="gzip")
 
 df = load_data()
+st.write(df.columns)
 
 # Layout setup
 st.set_page_config(layout="wide")
