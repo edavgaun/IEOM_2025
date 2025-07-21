@@ -41,7 +41,7 @@ def plot_umap_scatter(
         opacity=0.65
     )
     fig.update_layout(
-        title="UMAP Projection of IEOM Papers",
+        title="UMAP Projection of IEOM Papers Across Conference Regions and Years",
         legend_title_text="Year and Conference",
         xaxis_title="UMAP-1",
         yaxis_title="UMAP-2"
