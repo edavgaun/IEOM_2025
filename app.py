@@ -105,10 +105,18 @@ with tabs[0]:
         col1, col2, col3 = st.columns([1, 2, 3])
 
         with col1:
-            st.markdown("##### 📊 Identified Papers by Region")
-            st.image("assets/Paper submissions.png", use_container_width=True)
+            st.markdown("""
+            ### 📊 Overview of IEOM Paper Identification and Coverage
+            
+            The first chart illustrates the **number of papers successfully identified per region across IEOM editions**. Each region's line shows the **minimum, average, and maximum paper counts**, while the **dot size and color reflect conference maturity** (i.e., how many years that region has hosted an IEOM conference). For instance, the 'International' track shows the highest average and maturity, while other regions vary in both paper volume and consistency.
+            
+            The second graphic provides a **visual summary of import success rates** for each region. Each row represents a region, where each icon reflects **5% of its total paper entries**. Green icons indicate successful paper identifications, and red icons show failures (due to broken links or missing data). Regions like 'Central' had major retrieval issues, while others such as 'North' and 'Asia' show strong coverage with minimal data loss.
+            
+            These visuals together highlight both the **breadth** and **reliability** of the dataset across global IEOM editions.
+            """)
 
-        # cols 2 & 3 continue dataframe or remain empty if not needed
+
+        # cols 2 & 3 show pictures related to the paper extraction process
         with col2:
             st.markdown("##### 📊 Identified Papers by Region")
             st.image("assets/Paper submissions.png", use_container_width=True)
