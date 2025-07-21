@@ -72,7 +72,7 @@ with tabs[0]:
 
     # ROW 1
     with st.container():
-        col1, col2, col3 = st.columns([1, 2, 2])
+        col1, coldf = st.columns([1, 3])
 
         with col1:
             st.markdown("### ⚙️ Settings")
@@ -91,12 +91,8 @@ with tabs[0]:
             )
             df_slice = df_year.iloc[row_range[0]:row_range[1] + 1]
 
-        with col2:
+        with coldf:
             st.markdown("### 📑 Papers Found")
-            st.dataframe(df_slice[["Title", "Abstract", "Keywords"]], use_container_width=True)
-
-        with col3:
-            st.markdown("### 🧾 Metadata")
             st.dataframe(df_slice[["Title", "Abstract", "Keywords"]], use_container_width=True)
 
     # ROW 2
