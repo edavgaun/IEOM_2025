@@ -77,7 +77,12 @@ with tabs[0]:
         with col1:
             st.markdown("### ⚙️ Settings")
 
-            conf = st.selectbox("Select Conference", sorted(df["Conference"].unique()), key="ieom_conference")
+            conferences=list(df["Conference"].unique())
+            conferences.drop(annual)
+            conferences=[c.title() for c in conferences]
+            conf = st.selectbox("Select Conference", ['International'] + sorted(conferences), key="ieom_conference")
+            if conf=='International':
+                conf=='annual'
             df_conf = df[df["Conference"] == conf]
             
             year = st.selectbox("Select Year", sorted(df_conf["Year"].unique()), key="ieom_year")
