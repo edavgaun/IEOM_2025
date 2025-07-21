@@ -5,7 +5,6 @@ import numpy as np
 
 # Import Utils Scripts
 from Modules.Utils.get_text_to_embed import prepare_text
-from Modules.Utils.get_embeddings import get_embeddings
 
 # Import Chart Scripts
 from Modules.Charts.plot_umap import plot_umap_scatter
@@ -17,13 +16,6 @@ def load_data():
     return pd.read_json("Data/ieom_full.json.gz", compression="gzip")
 
 df = load_data()
-
-@st.cache_data
-def load_embeddings():
-    return np.load("Data/ieom_embeddings.npy")
-
-embeddings = load_embeddings()
-
 
 # Layout setup
 st.set_page_config(layout="wide")
@@ -76,7 +68,7 @@ tabs = st.tabs([
 ])
 
 st.markdown("<hr style='margin-top: -10px;'>", unsafe_allow_html=True)
-st.write(f"{embeddings.shape[0]:,} Papers from 10 Regions (≤9 Editions)")
+st.write(f"{df.shape[0]:,} Papers from 10 Regions (≤9 Editions)")
 
 with tabs[1]:
     st.subheader("🧭 UMAP Embedding Explorer")
