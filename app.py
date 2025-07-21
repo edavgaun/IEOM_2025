@@ -75,7 +75,7 @@ tabs = st.tabs([
 ])
 
 st.markdown("<hr style='margin-top: -10px;'>", unsafe_allow_html=True)
-st.write(f"Loaded {embeddings.shape[0]} embeddings of dimension {embeddings.shape[1]}.")
+st.write(f"Total Loaded Papers: {embeddings.shape[0]}.")
 
 with tabs[1]:
     st.subheader("🧭 UMAP Embedding Explorer")
