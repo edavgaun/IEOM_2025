@@ -49,7 +49,7 @@ def plot_umap_scatter(
             "Title": True,
             "Conference": True,
             "Year": True,
-            "Topic": True
+            "FinalTopicName": True
         },
         opacity=0.65
     )
