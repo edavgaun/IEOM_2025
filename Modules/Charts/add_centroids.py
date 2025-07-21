@@ -82,7 +82,7 @@ def add_centroids_to_umap(
         fig.add_annotation(
         xref="paper",
         yref="paper",
-        x=1.03,
+        x=1.02,
         y=1.01,
         text=(
         "Dashed lines show the average position of <br>"
