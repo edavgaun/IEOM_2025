@@ -82,7 +82,8 @@ with tabs[0]:
             conferences=[c.title() for c in conferences]
             conf = st.selectbox("Select Conference", ['International'] + sorted(conferences), key="ieom_conference")
             if conf=='International':
-                conf=='annual'
+                conf='annual'
+                
             df_conf = df[df["Conference"] == conf]
             
             year = st.selectbox("Select Year", sorted(df_conf["Year"].unique()), key="ieom_year")
