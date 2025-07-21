@@ -131,7 +131,7 @@ with tabs[0]:
         col1, col2, col3 = st.columns([1, 2, 2])
 
         with col1:
-            st.markdown("### 🔢 Word Frequency Controls")
+            st.markdown("### 🔢 Word Frequency Controls for the chosen Conference and Year")
             top_n = st.slider("Top N words", min_value=5, max_value=50, value=20, step=1)
             remove_stopwords = st.checkbox("Remove custom stopwords", value=True)
 
