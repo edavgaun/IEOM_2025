@@ -49,9 +49,6 @@ st.markdown("""
 - Each tab allows different types of filtering so make sure to familiarize yourself with them first.
 - **Paper Overview** shows Conference Proceedings raw abstracts and metadata.
 - **UMAP Projection** lets you explore papers in a 2D dimensional space.
-- The **Network Graph** shows term co-occurrence.
-- Use the **Radar Charts** to compare keyword relevance across two years.
-- The **Bump Chart** tracks top keywords over time.
 - The **LDA Chart** shows the Latent Dirichlet Allocation analysis made on the proceedings.
 
 ---
@@ -61,9 +58,6 @@ st.markdown("""
 tabs = st.tabs([
     "📄 Paper Overview",
     "🧭 UMAP Projection",
-    "🌐 Co-occurrence Network",
-    "📊 Radar Charts",
-    "📈 Bump Chart",
     "🧠 Topic Modeling (LDA)"
 ])
 
