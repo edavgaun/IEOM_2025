@@ -17,6 +17,13 @@ def load_data():
 
 df = load_data()
 
+@st.cache_data
+def load_embeddings():
+    return np.load("Data/ieom_embeddings.npy")
+
+embeddings = load_embeddings()
+
+
 # Layout setup
 st.set_page_config(layout="wide")
 st.markdown("""
