@@ -18,7 +18,6 @@ def load_data():
     return pd.read_json("Data/ieom_full.json.gz", compression="gzip")
 
 df = load_data()
-st.write(df.columns)
 
 # Layout setup
 st.set_page_config(layout="wide")
@@ -78,7 +77,10 @@ with tabs[0]:
         with col1:
             st.markdown("### ⚙️ Settings")
 
-            year = st.selectbox("Select Year", sorted(df["Year"].unique()), key="ieom_year")
+            conf = st.selectbox("Select Conference", sorted(df["Conference"].unique()), key="ieom_conference")
+            df_conf = df[df["Conference"] == conf]
+            
+            year = st.selectbox("Select Year", sorted(df_conf["Year"].unique()), key="ieom_year")
             df_year = df[df["Year"] == year]
 
             max_rows = len(df_year)
@@ -91,11 +93,11 @@ with tabs[0]:
 
         with col2:
             st.markdown("### 📑 Papers Found")
-            st.dataframe(df_slice[["Title", "KeyWords", "Abstract", "Paper"]], use_container_width=True)
+            st.dataframe(df_slice[["Title", "Abstract", "KeyWords"]], use_container_width=True)
 
         with col3:
             st.markdown("### 🧾 Metadata")
-            st.dataframe(df_slice[["Region", "Conference", "FinalTopicName", "Year"]], use_container_width=True)
+            st.dataframe(df_slice[["Title", "Abstract", "KeyWords"]], use_container_width=True)
 
     # ROW 2
     with st.container():
@@ -117,7 +119,7 @@ with tabs[0]:
         col1, col2, col3 = st.columns([1, 2, 2])
 
         with col1:
-            st.markdown("##### 📊 Paper Identification Rate")
+            st.markdown("##### 📊 Paper Extraction Rate")
             st.image("assets/pct of papers.png", use_container_width=True)
 
         with col2:
