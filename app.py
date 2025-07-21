@@ -11,6 +11,7 @@ from Modules.Utils.get_text_to_embed import prepare_text
 # Import Chart Scripts
 from Modules.Charts.plot_umap import plot_umap_scatter
 from Modules.Charts.add_centroids import add_centroids_to_umap
+from Modules.Charts.bow_freq_chart import get_top_terms, make_freq_chart
 
 # This tells Streamlit to load the file only once and reuse it
 @st.cache_data
@@ -18,6 +19,12 @@ def load_data():
     return pd.read_json("Data/ieom_full.json.gz", compression="gzip")
 
 df = load_data()
+
+@st.cache_data
+def load_bow_df():
+    return pd.read_parquet("Data/ieom_bow.parquet")
+
+bow_df = load_bow_df()
 
 # Layout setup
 st.set_page_config(layout="wide")
@@ -139,10 +146,13 @@ with tabs[0]:
         with col1:
             st.markdown("### 🔢 Word Frequency Controls for the chosen Conference and Year")
             top_n = st.slider("Top N words", min_value=5, max_value=50, value=20, step=1)
-            remove_stopwords = st.checkbox("Remove custom stopwords", value=True)
 
         with col2:
             st.markdown("### 🔤 Word Frequency Chart")
+            bow_df_plot=bow_df.iloc[df_slice.index]
+            freq_df = get_top_terms(bow_df_plot, top_n=top_n)
+            chart = make_freq_chart(freq_df)
+            st.altair_chart(chart, use_container_width=True)
 
             
 
