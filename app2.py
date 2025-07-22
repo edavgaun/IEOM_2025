@@ -5,6 +5,7 @@ from Modules.Utils.load_data import load_metadata, load_bow
 from Modules.Charts.bow_freq_chart import get_top_terms, make_freq_chart
 from Modules.UI.static_charts import show_static_charts
 from Modules.UI.layout_config import set_layout
+from Modules.UI.header_bow import show_bow_header
 
 # Layout
 set_layout()
@@ -14,9 +15,7 @@ df_meta = load_metadata()
 bow_df = load_bow()
 
 # Header
-st.title("🔤 BOW Frequency Explorer")
-st.caption("📘 Based on: Edgar Avalos-Gauna (2025), *15 Years of IEOM Proceedings*")
-st.caption("Avalos-Gauna, E. (2025). *Tracing AI and Supply Chain Emphasis Across the Global IEOM Landscape, A Meta-Analysis Under Global Uncertainty*. 2nd IEOM World Congress on Industrial Engineering and Operations Management, Windsor, Ontario, Canada, October 14–16, 2025")
+show_bow_header()
 
 # Instructions
 st.markdown("""
