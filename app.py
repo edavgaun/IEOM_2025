@@ -16,7 +16,7 @@ st.set_page_config(layout="wide")
 st.markdown("""
     <style>
         .block-container {
-            padding-top: 1rem;
+            padding-top: 1.5rem;
             padding-bottom: 1rem;
             padding-left: 2rem;
             padding-right: 2rem;
@@ -27,8 +27,11 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Header
+# Header with citation
 st.title("🧭 UMAP Embedding Explorer")
+st.caption("📘 Based on: Edgar Avalos-Gauna (2025), *15 Years of IEOM Proceedings*")
+st.caption("Avalos-Gauna, E. (2025). *Tracing AI and Supply Chain Emphasis Across the Global IEOM Landscape, A Meta-Analysis Under Global Uncertainty*. 2nd IEOM World Congress on Industrial Engineering and Operations Management, Windsor, Ontario, Canada, October 14–16, 2025")
+
 
 # Filters
 selected_years = st.multiselect(
