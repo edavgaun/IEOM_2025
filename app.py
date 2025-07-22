@@ -32,6 +32,19 @@ st.title("🧭 UMAP Embedding Explorer")
 st.caption("📘 Based on: Edgar Avalos-Gauna (2025), *15 Years of IEOM Proceedings*")
 st.caption("Avalos-Gauna, E. (2025). *Tracing AI and Supply Chain Emphasis Across the Global IEOM Landscape, A Meta-Analysis Under Global Uncertainty*. 2nd IEOM World Congress on Industrial Engineering and Operations Management, Windsor, Ontario, Canada, October 14–16, 2025")
 
+# Instructions
+st.markdown("""
+### 🧭 How to Use This App
+
+This tool lets you explore over 11,000 IEOM conference papers in a 2D space generated using UMAP and LLM-based embeddings.
+
+- **Filter** by year, conference, and topic to narrow down the dataset.
+- Each dot represents a paper. Similar papers appear closer together.
+- **Centroids** are added to help you visualize topic clusters.
+- Hover over points (in Plotly) to see details and explore relationships between topics and years.
+
+This interface supports meta-analysis, comparative research, and exploration of regional and thematic trends in AI and supply chain discussions.
+""")
 
 # Filters
 selected_years = st.multiselect(
