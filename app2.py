@@ -42,6 +42,7 @@ df_year = df_conf[df_conf["Year"] == year]
 # Load corresponding BOW slice
 try:
     bow_df = load_bow(region_key, year)
+    bow_df.index = df_year.index
 except FileNotFoundError:
     st.error(f"No BOW file found for: {region_key}_{year}. Please ensure the file exists.")
     st.stop()
