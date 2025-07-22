@@ -4,7 +4,7 @@ import pandas as pd
 from Modules.Charts.plot_umap import plot_umap_scatter
 from Modules.Charts.add_centroids import add_centroids_to_umap
 from Modules.UI.layout_config import set_layout
-from Modules.UI.header_bow import show_bow_header
+from Modules.UI.header import show_header
 
 # Load dataset
 @st.cache_data
