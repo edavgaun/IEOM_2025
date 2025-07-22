@@ -5,7 +5,7 @@ def set_layout():
     st.markdown("""
         <style>
             .block-container {
-                padding-top: 1rem;
+                padding-top: 1.5rem;
                 padding-bottom: 1rem;
                 padding-left: 2rem;
                 padding-right: 2rem;
