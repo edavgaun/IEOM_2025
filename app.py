@@ -3,6 +3,8 @@ import pandas as pd
 
 from Modules.Charts.plot_umap import plot_umap_scatter
 from Modules.Charts.add_centroids import add_centroids_to_umap
+from Modules.UI.layout_config import set_layout
+from Modules.UI.header_bow import show_bow_header
 
 # Load dataset
 @st.cache_data
@@ -12,25 +14,10 @@ def load_data():
 df = load_data()
 
 # Layout
-st.set_page_config(layout="wide")
-st.markdown("""
-    <style>
-        .block-container {
-            padding-top: 1.5rem;
-            padding-bottom: 1rem;
-            padding-left: 2rem;
-            padding-right: 2rem;
-        }
-        .css-18e3th9 {
-            padding-top: 0rem !important;
-        }
-    </style>
-""", unsafe_allow_html=True)
+set_layout()
 
-# Header with citation
-st.title("🗺️ UMAP Embedding Explorer")
-st.caption("📘 Based on: Edgar Avalos-Gauna (2025), *15 Years of IEOM Proceedings*")
-st.caption("Avalos-Gauna, E. (2025). *Tracing AI and Supply Chain Emphasis Across the Global IEOM Landscape, A Meta-Analysis Under Global Uncertainty*. 2nd IEOM World Congress on Industrial Engineering and Operations Management, Windsor, Ontario, Canada, October 14–16, 2025")
+# Header
+show_bow_header()
 
 # Instructions
 st.markdown("""
