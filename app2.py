@@ -63,7 +63,7 @@ st.markdown("### 📑 Filtered Papers")
 st.dataframe(df_slice[["Title", "Abstract", "Keywords"]], use_container_width=True)
 
 # Word frequency chart
-st.markdown("### 🔤 Top Word Frequencies")
+st.markdown("### 🔤 Top Word Frequencies (from filtered selection)")
 top_n = st.slider("Top N words", 5, 50, 20)
 freq_df = get_top_terms(bow_slice, top_n=top_n)
 chart = make_freq_chart(freq_df)
