@@ -12,8 +12,9 @@ def show_static_charts():
   - 🔴 Red = missing or failed entries  
 
 **Dataset Summary**  
-- 📄 Total Papers Extracted: `{df_meta.shape[0]:,}`  
-- 🔤 Total Unique Words After Filtering: `{bow_df.shape[1]:,}`
+- 📄 Total Papers Extracted: 11,297  
+- 🔤 Total Unique Words After Filtering: 10,743
+(Including Bigrams and Trigrams)
 """)
 
     with col2:
