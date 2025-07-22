@@ -17,7 +17,7 @@ df = load_data()
 set_layout()
 
 # Header
-show_header(🗺️ UMAP Embedding Explorer)
+show_header("🗺️ UMAP Embedding Explorer")
 
 # Instructions
 st.markdown("""
