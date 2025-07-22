@@ -1,7 +1,8 @@
 import streamlit as st
 import pandas as pd
 
-from Modules.Utils.load_data import load_metadata, load_bow
+from Modules.Utils.load_data import load_metadata
+from Modules.Utils.load_bow import load_bow
 from Modules.Charts.bow_freq_chart import get_top_terms, make_freq_chart
 from Modules.UI.static_charts import show_static_charts
 from Modules.UI.layout_config import set_layout
@@ -10,9 +11,8 @@ from Modules.UI.header import show_header
 # Layout
 set_layout()
 
-# Load data
+# Load metadata
 df_meta = load_metadata()
-bow_df = load_bow()
 
 # Header
 show_header("🔤 BOW Frequency Explorer")
@@ -28,18 +28,25 @@ Explore vocabulary trends across IEOM regions using Bag-of-Words frequency.
 - Use the **Top N words** slider to view the most common terms.
 """)
 
-# Filters
+# Conference & Year Filters
 conferences = list(df_meta["Conference"].unique())
-conferences.remove('annual')
+conferences.remove("annual")
 conferences = [c.title() for c in conferences]
-conf = st.selectbox("Select Conference", ['International'] + sorted(conferences))
-if conf == 'International':
-    conf = 'annual'
+conf = st.selectbox("Select Conference", ["International"] + sorted(conferences))
+region_key = "annual" if conf == "International" else conf.lower()
 
-df_conf = df_meta[df_meta["Conference"] == conf]
+df_conf = df_meta[df_meta["Conference"] == region_key]
 year = st.selectbox("Select Year", sorted(df_conf["Year"].unique()))
 df_year = df_conf[df_conf["Year"] == year]
 
+# Load corresponding BOW slice
+try:
+    bow_df = load_bow(region_key, year)
+except FileNotFoundError:
+    st.error(f"No BOW file found for: {region_key}_{year}. Please ensure the file exists.")
+    st.stop()
+
+# Row Range Slider
 max_rows = len(df_year)
 row_range = st.slider("Select row range", 0, max_rows - 1, value=(0, min(10, max_rows - 1)))
 selected_indices = df_year.index[row_range[0]:row_range[1] + 1]
