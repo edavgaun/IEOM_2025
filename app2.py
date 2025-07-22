@@ -5,7 +5,7 @@ from Modules.Utils.load_data import load_metadata, load_bow
 from Modules.Charts.bow_freq_chart import get_top_terms, make_freq_chart
 from Modules.UI.static_charts import show_static_charts
 from Modules.UI.layout_config import set_layout
-from Modules.UI.header_bow import show_bow_header
+from Modules.UI.header import show_header
 
 # Layout
 set_layout()
@@ -15,7 +15,7 @@ df_meta = load_metadata()
 bow_df = load_bow()
 
 # Header
-show_bow_header()
+show_header("🔤 BOW Frequency Explorer")
 
 # Instructions
 st.markdown("""
