@@ -14,7 +14,7 @@ This dashboard suite helps you explore over 11,000 IEOM conference papers using 
 
 - 🧭 **UMAP Embedding Explorer**  
   Explore papers in a 2D space based on semantic similarity.  
-  👉 [Open UMAP Explorer](https://ieom-2025.streamlit.app/)
+  👉 [Open UMAP Explorer](https://ieom-2025-umap.streamlit.app/)
 
 - 🔤 **BOW Frequency Explorer**  
   View the most frequent words in selected subsets of papers.  
