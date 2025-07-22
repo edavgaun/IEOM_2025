@@ -23,7 +23,8 @@ You can explore the live app here:
 - `/Data` – CSV files containing conference proceedings data (2015–2024)
 - `/Modules` – Python scripts used for visualizations
 - `/assets` – Images and logos used for visualizations
-- `app.py` – Main Jupyter Notebook used to build the application
+- `app.py` – Main Python Script to build the UMAP visualization
+- `app2.py` – Main Python Script to build the BoW visualizations
 - `requirements.txt` – Python dependencies
 
 ## 🛠 Technologies Used
