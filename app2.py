@@ -28,6 +28,9 @@ Explore vocabulary trends across IEOM regions using Bag-of-Words frequency.
 - Use the **Top N words** slider to view the most common terms.
 """)
 
+# Static images
+show_static_charts()
+
 # Conference & Year Filters
 conferences = list(df_meta["Conference"].unique())
 conferences.remove("annual")
@@ -54,9 +57,6 @@ selected_indices = df_year.index[row_range[0]:row_range[1] + 1]
 df_slice = df_year.loc[selected_indices]
 df_slice.index = list(range(row_range[0], row_range[1] + 1))
 bow_slice = bow_df.loc[selected_indices]
-
-# Static images
-show_static_charts()
 
 # Show filtered papers
 st.markdown("### 📑 Filtered Papers")
