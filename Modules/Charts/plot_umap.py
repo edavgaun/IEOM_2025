@@ -84,7 +84,7 @@ def plot_umap_scatter(df, selected_years=None, selected_conferences=None, select
         
         fig.add_annotation(
             x=x_mean,
-            y=y_mean,
+            y=y_mean+1,
             text=label,
             showarrow=False,
             font=dict(size=12, color="black"),
