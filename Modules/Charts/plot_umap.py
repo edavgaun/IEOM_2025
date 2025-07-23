@@ -81,10 +81,12 @@ def plot_umap_scatter(df, selected_years=None, selected_conferences=None, select
         x_mean = cluster_df["x"].mean()
         y_mean = cluster_df["y"].mean()
         label = split_label(topic)
-        
+        delta=0.75
+        if y_mean<0:
+            delta=-0.75
         fig.add_annotation(
             x=x_mean,
-            y=y_mean+1,
+            y=y_mean+delta,
             text=label,
             showarrow=False,
             font=dict(size=12, color="black"),
