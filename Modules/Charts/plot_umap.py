@@ -25,7 +25,7 @@ def plot_umap_scatter(df, selected_years=None, selected_conferences=None, select
     # Define full color map
     full_color_map = {
         "Outliers / Uncategorized": "#d3d3d3",
-        "Maintenance & Reliability Engineering": "#1f77b4",
+        "Maintenance & Reliability Engineering": "#2ca02c",
         "Sustainability & Green Supply Chains": "#ff7f0e",
         "Industry 4.0 & Smart Manufacturing": "#2ca02c",
         "Project & Construction Management": "#9467bd",
@@ -36,7 +36,7 @@ def plot_umap_scatter(df, selected_years=None, selected_conferences=None, select
         "Renewable Energy & Power Systems": "#bcbd22",
         "Vehicle Routing & Optimization Problems": "#4b0082",
         "Ergonomics & Worker Safety": "#ff1493",
-        "TQM, ISO & Quality Management": "#6a3d9a",
+        "TQM, ISO & Quality Management": "#ff7f0e",
         "Inventory Control & Demand Forecasting": "#ffcc00",
         "Public Policy & Government Programs": "#009e73",
         "Learning, Students & Education": "#e41a1c",
