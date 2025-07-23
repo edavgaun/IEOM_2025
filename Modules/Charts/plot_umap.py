@@ -77,6 +77,8 @@ def plot_umap_scatter(df, selected_years=None, selected_conferences=None, select
     )
 
     for topic in filtered_color_map:
+        if "Outlier" in topic:
+            continue
         cluster_df = df[df["FinalTopicName"] == topic]
         x_mean = cluster_df["x"].mean()
         y_mean = cluster_df["y"].mean()
