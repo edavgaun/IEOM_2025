@@ -36,7 +36,7 @@ def plot_umap_scatter(df, selected_years=None, selected_conferences=None, select
         "Renewable Energy & Power Systems": "#bcbd22",
         "Vehicle Routing & Optimization Problems": "#4b0082",
         "Ergonomics & Worker Safety": "#ff1493",
-        "TQM, ISO & Quality Management": "#ff7f0e",
+        "TQM, ISO & Quality Management": "#17becf",
         "Inventory Control & Demand Forecasting": "#ffcc00",
         "Public Policy & Government Programs": "#009e73",
         "Learning, Students & Education": "#e41a1c",
