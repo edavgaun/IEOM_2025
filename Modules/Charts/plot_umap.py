@@ -64,6 +64,7 @@ def plot_umap_scatter(df, selected_years=None, selected_conferences=None, select
             "</span>"
         ),
         legend_title="Topic",
+        showlegend=False,
         xaxis_title=None,
         yaxis_title=None,
         xaxis=dict(showgrid=False, showticklabels=False, zeroline=False),
