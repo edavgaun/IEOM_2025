@@ -10,6 +10,11 @@ def filter_df(df, selected_years, selected_conferences, selected_topics):
         df["FinalTopicName"].isin(selected_topics)
     ]
 
+def split_label(text, words_per_line=2):
+    words = text.split()
+    lines = [' '.join(words[i:i + words_per_line]) for i in range(0, len(words), words_per_line)]
+    return "<br>".join(lines)
+
 def plot_umap_scatter(df, selected_years=None, selected_conferences=None, selected_topics=None):
     df = filter_df(df, selected_years, selected_conferences, selected_topics)
     df["Year"] = df["Year"].astype(str)
@@ -54,7 +59,6 @@ def plot_umap_scatter(df, selected_years=None, selected_conferences=None, select
         opacity=0.6
     )
 
-    # 🧠 Your original layout preserved
     fig.update_layout(
         height=800,
         title=(
@@ -71,5 +75,22 @@ def plot_umap_scatter(df, selected_years=None, selected_conferences=None, select
         yaxis=dict(showgrid=False, showticklabels=False, zeroline=False),
         plot_bgcolor="white"
     )
+
+    for topic in filtered_color_map:
+        cluster_df = df[df["FinalTopicName"] == topic]
+        x_mean = cluster_df["x"].mean()
+        y_mean = cluster_df["y"].mean()
+        label = split_label(topic)
+        
+        fig.add_annotation(
+            x=x_mean,
+            y=y_mean,
+            text=label,
+            showarrow=False,
+            font=dict(size=12, color="black"),
+            bgcolor="rgba(255,255,255,0.7)",
+            bordercolor="black",
+            borderwidth=1
+        )
 
     return fig, df
