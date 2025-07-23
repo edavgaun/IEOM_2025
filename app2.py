@@ -7,6 +7,7 @@ from Modules.Charts.bow_freq_chart import get_top_terms, make_freq_chart
 from Modules.UI.static_charts import show_static_charts
 from Modules.UI.layout_config import set_layout
 from Modules.UI.header import show_header
+from Modules.UI.instructions import show_bow_instructions
 
 # Layout
 set_layout()
@@ -18,15 +19,7 @@ df_meta = load_metadata()
 show_header("🔤 BOW Frequency Explorer")
 
 # Instructions
-st.markdown("""
-### 🧭 How to Use This App
-
-Explore vocabulary trends across IEOM regions using Bag-of-Words frequency.
-
-- Filter by **conference**, **year**, and **row range** to view a subset of papers.
-- See a table of the filtered papers (title, abstract, keywords).
-- Use the **Top N words** slider to view the most common terms.
-""")
+show_bow_instructions()
 
 # Static images
 show_static_charts()
