@@ -27,37 +27,34 @@ if tf_dfs is None or tf_idfs is None:
     st.error("Could not load data. Please check your internet connection or the GitHub URLs.")
     st.stop()
 
-# Assume `tf_dfs` and `tf_idfs` have the same years and regions
 # The data structure is a dictionary of lists of dataframes
 # We need to get the keys and columns from the first element
-available_regions = list(tf_dfs.keys())
-available_years = sorted(tf_dfs[available_regions[0]][0].columns.tolist())
+available_regions = [r.title() if r!='annual' else 'International' for r in tf_dfs.keys()]
+available_words= tf_dfs['annual'][0].index.values
 
-# Conference & Year Filters
-conferences = available_regions
-conferences.remove("annual")
-conferences = [c.title() for c in conferences]
+# Conference sort
+conferences = sorted(available_regions[1:])
+conferences = [available_regions[0]] + conferences
 
 conf = st.selectbox("Select Conference", ["International"] + sorted(conferences))
 region_key = "annual" if conf == "International" else conf.lower()
+
+available_years=tf_dfs[region_key][0].columns.values
+
 year = st.selectbox("Select Year", available_years)
 
 # Keyword Input
 st.markdown("### 🔍 Keywords to Highlight")
-default_keywords = ['generative ai', 'ai', 'machine learning', 'llm']
-keywords_input = st.text_area(
-    "Enter keywords (comma-separated)",
-    ", ".join(default_keywords),
-    help="These words will be highlighted in the plot. Make sure they are lowercase."
+keywords_input = st.multiselect(
+    "Select KeyWords", options=available_words, 
+    default=['generative ai', 'ai', 'machine learning', 'llm']
 )
-custom_keywords = [word.strip().lower() for word in keywords_input.split(',') if word.strip()]
-
 
 # --- Display the Plot ---
 st.markdown("### 📈 TF-IDF vs. Normalized TF")
 
 # Create and display the Matplotlib plot
-fig = semmantic_drift_plot_matplotlib(
+semmantic_drift_plot_matplotlib(
     region=region_key,
     year=year,
     tf_dfs=tf_dfs,
@@ -65,9 +62,6 @@ fig = semmantic_drift_plot_matplotlib(
     words=custom_keywords,
     fz=12
 )
-
-# Display the Matplotlib plot in Streamlit
-st.pyplot(fig)
 
 # Add a markdown explanation for the plot
 st.markdown("""
