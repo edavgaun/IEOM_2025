@@ -1,38 +1,85 @@
+# app3.py
 import streamlit as st
-import sys
-import os
+import pandas as pd
 
-# Add the Modules directory to the Python path
-# This assumes your app3.py is in the root, and Modules/ is a direct subdirectory
-# If app3.py is also in a subdirectory, you might need to adjust this path.
-script_dir = os.path.dirname(__file__)
-modules_path = os.path.join(script_dir, "Modules")
-if modules_path not in sys.path:
-    sys.path.append(modules_path)
+# Import functions from your modules
+from Modules.Utils.load_pickle import load_dictionary_norm_tf, load_dictionary_tf_idf
+from Modules.Charts.drift_chart import semmantic_drift_plot_matplotlib
+from Modules.UI.layout_config import set_layout
+from Modules.UI.header import show_header
+from Modules.UI.instructions import show_drift_instructions
 
-# Now you can import from Modules.Utils
-from Utils.load_pickle import load_dictionary_norm_tf, load_dictionary_tf_idf
+# Layout
+set_layout()
 
-st.title("My Streamlit App with GitHub Data")
+# Header
+show_header("📊 Semantic Drift Analysis")
 
-# Load the data using the functions
-tf_dfs = load_dictionary_norm_tf()
-tf_idfs = load_dictionary_tf_idf()
+# Instructions
+show_drift_instructions()
 
-if tf_dfs is not None and tf_idfs is not None:
-    st.success("Data loaded successfully!")
-    st.write("tf_dfs keys:", tf_dfs.keys())
-    st.write("tf_idfs keys:", tf_idfs.keys())
-    
-    # You can now use tf_dfs and tf_idfs in your visualization or analysis
-    # For example, display a part of the data:
-    if 'annual' in tf_dfs and tf_dfs['annual'] and isinstance(tf_dfs['annual'][0], pd.DataFrame):
-        st.subheader("Sample from tf_dfs['annual'][0]")
-        st.dataframe(tf_dfs['annual'][0].head())
-    
-    if 'annual' in tf_idfs and isinstance(tf_idfs['annual'], pd.DataFrame):
-        st.subheader("Sample from tf_idfs['annual']")
-        st.dataframe(tf_idfs['annual'].head())
+# Load TF and TF-IDF data from GitHub
+with st.spinner("Loading data from GitHub..."):
+    tf_dfs = load_dictionary_norm_tf()
+    tf_idfs = load_dictionary_tf_idf()
 
-else:
-    st.error("Failed to load data. Check the console for errors or the GitHub paths.")
+if tf_dfs is None or tf_idfs is None:
+    st.error("Could not load data. Please check your internet connection or the GitHub URLs.")
+    st.stop()
+
+# Assume `tf_dfs` and `tf_idfs` have the same years and regions
+# The data structure is a dictionary of lists of dataframes
+# We need to get the keys and columns from the first element
+available_regions = list(tf_dfs.keys())
+available_years = sorted(tf_dfs[available_regions[0]][0].columns.tolist())
+
+# Conference & Year Filters
+conferences = available_regions
+conferences.remove("annual")
+conferences = [c.title() for c in conferences]
+
+conf = st.selectbox("Select Conference", ["International"] + sorted(conferences))
+region_key = "annual" if conf == "International" else conf.lower()
+year = st.selectbox("Select Year", available_years)
+
+# Keyword Input
+st.markdown("### 🔍 Keywords to Highlight")
+default_keywords = ['generative ai', 'ai', 'machine learning', 'llm']
+keywords_input = st.text_area(
+    "Enter keywords (comma-separated)",
+    ", ".join(default_keywords),
+    help="These words will be highlighted in the plot. Make sure they are lowercase."
+)
+custom_keywords = [word.strip().lower() for word in keywords_input.split(',') if word.strip()]
+
+
+# --- Display the Plot ---
+st.markdown("### 📈 TF-IDF vs. Normalized TF")
+
+# Create and display the Matplotlib plot
+fig = semmantic_drift_plot_matplotlib(
+    region=region_key,
+    year=year,
+    tf_dfs=tf_dfs,
+    tf_idfs=tf_idfs,
+    words=custom_keywords,
+    fz=12
+)
+
+# Display the Matplotlib plot in Streamlit
+st.pyplot(fig)
+
+# Add a markdown explanation for the plot
+st.markdown("""
+---
+**Understanding the Plot:**
+This chart visualizes the relationship between a term's frequency (TF) and its importance (TF-IDF) in the selected year.
+-   **Normalized TF (X-axis):** How common the word is.
+-   **TF-IDF (Y-axis):** How distinctive the word is.
+
+**Key Quadrants:**
+-   **Top Right (Green):** Frequent and distinctive words.
+-   **Top Left (Orange):** Rare but highly distinctive (often new or emerging terms).
+-   **Bottom Right (Blue):** Common and generic words.
+-   **Bottom Left (Gray):** Rare and generic words (noise).
+""")
