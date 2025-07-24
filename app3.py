@@ -9,6 +9,7 @@ from Modules.Charts.drift_chart import semmantic_drift_plot_matplotlib
 from Modules.UI.layout_config import set_layout
 from Modules.UI.header import show_header
 from Modules.UI.instructions import show_drift_instructions
+from Modules.UI.widgets import show_tfidf_widgets
 
 # Layout
 set_layout()
@@ -38,45 +39,15 @@ conferences = ['International'] + conferences
 available_years = sorted(tf_dfs['annual'][0].columns.values.tolist())
 
 
-# --- CREATE THE TWO-COLUMN LAYOUT ---
-col1, col2 = st.columns(2)
-
-with col1:
-    # Widgets for the left column
-    conf = st.selectbox("Select Conference", conferences)
-    region_key = "annual" if conf == "International" else conf.lower()
-    
-    # Get the specific years for the selected conference
-    years_for_conf = sorted(tf_dfs[region_key][0].columns.values.tolist())
-    
-    # Create a slider for the year range
-    start_year, end_year = st.slider(
-        "Select Year Range",
-        min_value=min(years_for_conf),
-        max_value=max(years_for_conf),
-        value=(min(years_for_conf), max(years_for_conf))
-    )
-    # The current logic of semmantic_drift_plot_matplotlib expects a single year,
-    # so we'll need to adapt this. For now, let's just use the start year.
-    # We'll use start_year for plotting and the slider for UI.
-    year = start_year
-
-
-with col2:
-    # Widget for the right column
-    st.markdown("### 🔍 Keywords to Highlight")
-    keywords_input = st.multiselect(
-        "Select KeyWords", options=available_words, 
-        default=['generative ai', 'ai', 'machine learning', 'llm']
-    )
-
+# --- CREATE THE TWO-COLUMN LAYOUT for the Widget section---
+show_tfidf_widgets()
 
 # --- Display the Plot below the columns ---
 st.markdown("---")
 st.markdown("### 📈 TF-IDF vs. Normalized TF")
 
-# Create and display the Matplotlib plot
-fig = semmantic_drift_plot_matplotlib(
+# Create and display the Scatter plot
+semmantic_drift_plot_matplotlib(
     region=region_key,
     year=year,
     tf_dfs=tf_dfs,
@@ -84,8 +55,6 @@ fig = semmantic_drift_plot_matplotlib(
     words=keywords_input, # <-- Using keywords_input as fixed in the last response
     fz=12
 )
-
-st.pyplot(fig)
 
 # Add a markdown explanation for the plot
 st.markdown("""
