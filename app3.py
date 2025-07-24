@@ -53,7 +53,7 @@ keywords_input = st.multiselect(
 # --- Display the Plot ---
 st.markdown("### 📈 TF-IDF vs. Normalized TF")
 
-# Create and display the Matplotlib plot
+# Create and display the Scatter plot
 semmantic_drift_plot_matplotlib(
     region=region_key,
     year=year,
