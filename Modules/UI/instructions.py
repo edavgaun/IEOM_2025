@@ -21,6 +21,7 @@ def show_main_instructions():
       👉 [Open BOW Explorer](https://ieom-2025-tf-idf.streamlit.app/)
       
     """, unsafe_allow_html=True)
+    
     st.markdown("---")
 
 
