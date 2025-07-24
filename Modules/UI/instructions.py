@@ -15,6 +15,11 @@ def show_main_instructions():
     - 🔤 **BOW Frequency Explorer**  
       View the most frequent words in selected subsets of papers.  
       👉 [Open BOW Explorer](https://ieom-2025-bow.streamlit.app/)
+
+    - 🔍 **BOW TF - IDF Analysis**  
+      View the most frequent and Distinctive words given a particular Conference and Year.  
+      👉 [Open BOW Explorer](https://ieom-2025-tf-idf.streamlit.app/)
+      
     """, unsafe_allow_html=True)
     st.markdown("---")
 
