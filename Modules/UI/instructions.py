@@ -44,3 +44,16 @@ def show_bow_instructions():
     - See a table of the filtered papers (title, abstract, keywords).
     - Use the **Top N words** slider to view the most common terms of the filtered df.
     """)
+
+
+def show_drift_instructions():
+    st.markdown(
+        """
+        ### 🧭 How to Use This App
+        
+        This app visualizes the relationship between Term Frequency (TF) and Term Distinctiveness (TF-IDF) for Tokens given a particular Region and Year.
+        
+        -   Use the filters to select a specific conference and year.
+        -   Enter keywords you wish to highlight in the text box.
+        """
+    )
