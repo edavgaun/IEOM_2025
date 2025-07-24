@@ -59,7 +59,7 @@ semmantic_drift_plot_matplotlib(
     year=year,
     tf_dfs=tf_dfs,
     tf_idfs=tf_idfs,
-    words=custom_keywords,
+    words=keywords_input,
     fz=12
 )
 
