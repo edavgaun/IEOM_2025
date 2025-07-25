@@ -17,7 +17,7 @@ def semmantic_drift_plot(region, year, tf_dfs, tf_idfs,
     keywords_lower = [w.lower() for w in words]
     chart_data['is_keyword'] = chart_data.index.str.lower().isin(keywords_lower)
 
-    color_map = {True: '#FF0000', False: '#1f77b4'}
+    color_map = {True: '#FF0000', False: '#ADD8E6'}
     chart_data['color_coding'] = chart_data['is_keyword'].map(color_map)
 
     # --- Apply the log2 transformation ---
