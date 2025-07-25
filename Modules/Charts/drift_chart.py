@@ -14,14 +14,14 @@ def semmantic_drift_plot(region, year, tf_dfs, tf_idfs,
         'tfidf_values': tfidf_series
     }).dropna()
 
-    # --- FIX 1: Make keyword comparison case-insensitive ---
     keywords_lower = [w.lower() for w in words]
     chart_data['is_keyword'] = chart_data.index.str.lower().isin(keywords_lower)
 
-    # --- FIX 2: Create a color column with explicit color names ---
-    chart_data['color_coding'] = chart_data['is_keyword'].apply(lambda x: 'red' if x else '#1f77b4') # Blue hex code
+    # --- THE FINAL, CORRECT FIX FOR COLORS ---
+    # Use a dictionary to map the boolean values to hex codes
+    color_map = {True: '#FF0000', False: '#1f77b4'} 
+    chart_data['color_coding'] = chart_data['is_keyword'].map(color_map)
     
-    # --- FIX 3: Correct the st.scatter_chart() call with explicit colors ---
     st.scatter_chart(
         chart_data,
         x="tf_values",
