@@ -1,7 +1,7 @@
 # app3.py
 import streamlit as st
 import pandas as pd
-import numpy as np # Needed for some previous functions
+import numpy as np
 
 # Import functions from your modules
 from Modules.Utils.load_pickle import load_dictionary_norm_tf, load_dictionary_tf_idf
@@ -44,10 +44,22 @@ region_key, start_year, end_year, keywords_input = show_tfidf_widgets(conference
 st.markdown("---")
 st.markdown("### 📈 TF-IDF vs. Normalized TF")
 
-# Create and display the Scatter plot
-semmantic_drift_plot_matplotlib(
+with plot_col1:
+    st.subheader("Chart for {}".format(start_year))
+    semmantic_drift_plot_matplotlib(
     region=region_key,
     year=start_year,
+    tf_dfs=tf_dfs,
+    tf_idfs=tf_idfs,
+    words=keywords_input, # <-- Using keywords_input as fixed in the last response
+    fz=12
+)
+
+with plot_col2:
+    st.subheader("Chart for {}".format(end_year))
+    semmantic_drift_plot_matplotlib(
+    region=region_key,
+    year=end_year,
     tf_dfs=tf_dfs,
     tf_idfs=tf_idfs,
     words=keywords_input, # <-- Using keywords_input as fixed in the last response
