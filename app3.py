@@ -71,6 +71,5 @@ with plot_col2:
 st.markdown("""
 ---
 **Understanding the Plot:**
-This chart visualizes the relationship between a term's frequency (TF) and its importance (TF-IDF) in the selected year range.
-...
+This chart visualizes the relationship between a term's frequency and its importance within a specific set of documents, allowing you to observe how topics and keywords change over time.
 """)
