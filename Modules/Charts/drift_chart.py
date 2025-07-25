@@ -35,7 +35,6 @@ def semmantic_drift_plot_matplotlib(region, year, tf_dfs, tf_idfs,
     y_thresh = np.percentile(y, 90)
     
     st.scatter_chart(
-        chart_data,
         x=x,
         y=y,
         color=["#FF0000"],
