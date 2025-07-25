@@ -1,6 +1,7 @@
 import streamlit as st
 
 def show_tfidf_widgets(conferences, tf_dfs):
+    available_words= tf_dfs['annual'][0].index.values
     
     col1, col2 = st.columns(2)
     
