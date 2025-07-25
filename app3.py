@@ -39,7 +39,7 @@ conferences = ['International'] + conferences
 
 
 # --- CREATE THE TWO-COLUMN LAYOUT for the Widget section---
-show_tfidf_widgets(conferences, tf_dfs)
+region_key, start_year, end_year, keywords_input = show_tfidf_widgets(conferences, tf_dfs)
 
 # --- Display the Plot below the columns ---
 st.markdown("---")
@@ -48,7 +48,7 @@ st.markdown("### 📈 TF-IDF vs. Normalized TF")
 # Create and display the Scatter plot
 semmantic_drift_plot_matplotlib(
     region=region_key,
-    year=year,
+    year=start_year,
     tf_dfs=tf_dfs,
     tf_idfs=tf_idfs,
     words=keywords_input, # <-- Using keywords_input as fixed in the last response
