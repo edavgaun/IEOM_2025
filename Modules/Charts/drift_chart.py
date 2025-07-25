@@ -26,14 +26,17 @@ def semmantic_drift_plot_matplotlib(region, year, tf_dfs, tf_idfs,
     tf_series = tf_dfs[region][0][year]
     tfidf_series = tf_idfs[region][year]
 
-    chart_data = pd.DataFrame(
-    np.random.randn(20, 4), columns=["col1", "col2", "col3", "col4"]
-    )
+    # Extract x and y for that region and year
+    x = tf_dfs[region][0][year]
+    y = tf_idfs[region][year]
+  
+    # Compute percentiles using only this region
+    x_thresh = np.percentile(x, 90)
+    y_thresh = np.percentile(y, 90)
     
     st.scatter_chart(
         chart_data,
-        x="col1",
-        y=["col2", "col3"],
-        size="col4",
-        color=["#FF0000", "#0000FF"],  # Optional
+        x=x,
+        y=y,
+        color=["#FF0000"],
     )
