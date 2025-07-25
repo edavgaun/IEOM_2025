@@ -4,7 +4,7 @@ import pandas as pd
 import streamlit as st
 
 def semmantic_drift_plot(region, year, tf_dfs, tf_idfs,
-                                     words=['generative ai', 'ai', 'machine learning', 'llm']):
+                         words=['generative ai', 'ai', 'machine learning', 'llm']):
 
     tf_series = tf_dfs[region][0][year]
     tfidf_series = tf_idfs[region][year]
@@ -14,16 +14,17 @@ def semmantic_drift_plot(region, year, tf_dfs, tf_idfs,
         'tfidf_values': tfidf_series
     }).dropna()
 
-    chart_data['is_keyword'] = chart_data.index.isin(words)
+    # --- FIX 1: Make keyword comparison case-insensitive ---
+    keywords_lower = [w.lower() for w in words]
+    chart_data['is_keyword'] = chart_data.index.str.lower().isin(keywords_lower)
 
-    # --- THE FIX STARTS HERE ---
-    # Create a new column with the color names 'red' or 'blue'
-    chart_data['color_coding'] = chart_data['is_keyword'].apply(lambda x: 'red' if x else 'blue')
+    # --- FIX 2: Create a color column with explicit color names ---
+    chart_data['color_coding'] = chart_data['is_keyword'].apply(lambda x: 'red' if x else '#1f77b4') # Blue hex code
     
-    # Update the color argument to use the new column
+    # --- FIX 3: Correct the st.scatter_chart() call with explicit colors ---
     st.scatter_chart(
         chart_data,
         x="tf_values",
         y="tfidf_values",
-        color="color_coding", # <-- Use the new color column
+        color="color_coding"
     )
