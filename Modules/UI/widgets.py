@@ -1,6 +1,7 @@
 import streamlit as st
 
-def show_tfidf_widgets():
+def show_tfidf_widgets(conferences, tf_dfs):
+    
     col1, col2 = st.columns(2)
     
     with col1:
