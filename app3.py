@@ -58,6 +58,6 @@ semmantic_drift_plot_matplotlib(
 st.markdown("""
 ---
 **Understanding the Plot:**
-This chart visualizes the relationship between a term's frequency (TF) and its importance (TF-IDF) in the selected year.
+This chart visualizes the relationship between a term's frequency (TF) and its importance (TF-IDF) in the selected year range.
 ...
 """)
