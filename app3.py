@@ -5,7 +5,7 @@ import numpy as np
 
 # Import functions from your modules
 from Modules.Utils.load_pickle import load_dictionary_norm_tf, load_dictionary_tf_idf
-from Modules.Charts.drift_chart import semmantic_drift_plot_matplotlib
+from Modules.Charts.drift_chart import semmantic_drift_plot
 from Modules.UI.layout_config import set_layout
 from Modules.UI.header import show_header
 from Modules.UI.instructions import show_drift_instructions
