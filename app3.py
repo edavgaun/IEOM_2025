@@ -53,7 +53,6 @@ with plot_col1:
     tf_dfs=tf_dfs,
     tf_idfs=tf_idfs,
     words=keywords_input,
-    fz=12
 )
 
 with plot_col2:
@@ -64,7 +63,6 @@ with plot_col2:
     tf_dfs=tf_dfs,
     tf_idfs=tf_idfs,
     words=keywords_input,
-    fz=12
 )
 
 # Add a markdown explanation for the plot
