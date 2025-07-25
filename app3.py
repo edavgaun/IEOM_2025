@@ -31,7 +31,6 @@ if tf_dfs is None or tf_idfs is None:
 
 # Get available regions and years from the loaded data
 available_regions = [r.title() if r!='annual' else 'International' for r in tf_dfs.keys()]
-available_words= tf_dfs['annual'][0].index.values
 
 # Conference sort
 conferences = sorted([r for r in available_regions if r != 'International'])
