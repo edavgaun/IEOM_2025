@@ -47,23 +47,25 @@ st.markdown("### 📈 TF-IDF vs. Normalized TF")
 plot_col1, plot_col2 = st.columns(2)
 with plot_col1:
     st.subheader("Chart for {}".format(start_year))
-    semmantic_drift_plot(
-    region=region_key,
-    year=start_year,
-    tf_dfs=tf_dfs,
-    tf_idfs=tf_idfs,
-    words=keywords_input,
-)
+    fig1 = semmantic_drift_plot_plotly(
+        region=region_key,
+        year=start_year,
+        tf_dfs=tf_dfs,
+        tf_idfs=tf_idfs,
+        words=keywords_input
+    )
+    st.plotly_chart(fig1, use_container_width=True)
 
 with plot_col2:
     st.subheader("Chart for {}".format(end_year))
-    semmantic_drift_plot(
-    region=region_key,
-    year=end_year,
-    tf_dfs=tf_dfs,
-    tf_idfs=tf_idfs,
-    words=keywords_input,
-)
+    fig2 = semmantic_drift_plot_plotly(
+        region=region_key,
+        year=end_year,
+        tf_dfs=tf_dfs,
+        tf_idfs=tf_idfs,
+        words=keywords_input
+    )
+    st.plotly_chart(fig2, use_container_width=True)
 
 # Add a markdown explanation for the plot
 st.markdown("""
