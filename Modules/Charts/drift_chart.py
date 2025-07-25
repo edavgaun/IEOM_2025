@@ -1,45 +1,104 @@
 # Modules/Charts/drift_chart.py
 import numpy as np
 import pandas as pd
+import plotly.graph_objects as go
 import streamlit as st
 
-def semmantic_drift_plot(region, year, tf_dfs, tf_idfs,
-                         words=['generative ai', 'ai', 'machine learning', 'llm']):
+def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
+                                 words=['generative ai', 'ai', 'machine learning', 'llm']):
+    """
+    Generates a semantic drift scatter plot using Plotly, showing TF vs TF-IDF.
+    This version is interactive and replicates the visual style of the Matplotlib chart.
+    """
 
-    tf_series = tf_dfs[region][0][year]
-    tfidf_series = tf_idfs[region][year]
-    
-    chart_data = pd.DataFrame({
-        'tf_values': tf_series,
-        'tfidf_values': tfidf_series
+    if region not in tf_dfs or year not in tf_dfs[region][0].columns:
+        return go.Figure()
+    if region not in tf_idfs or year not in tf_idfs[region].columns:
+        return go.Figure()
+
+    tf_series = tf_dfs[region][0][year].copy()
+    tfidf_series = tf_idfs[region][year].copy()
+
+    # Handle zeros before log transform
+    tf_series = tf_series.replace(0, 1e-20)
+    tfidf_series = tf_series.replace(0, 1e-20)
+
+    combined_df = pd.DataFrame({
+        'tf': tf_series,
+        'tfidf': tfidf_series
     }).dropna()
 
-    keywords_lower = [w.lower() for w in words]
-    chart_data['is_keyword'] = chart_data.index.str.lower().isin(keywords_lower)
+    x_thresh = np.percentile(combined_df['tf'], 90)
+    y_thresh = np.percentile(combined_df['tfidf'], 90)
 
-    color_map = {True: '#FF0000', False: '#ADD8E6'}
-    chart_data['color_coding'] = chart_data['is_keyword'].map(color_map)
+    fig = go.Figure()
 
-    # --- Apply the log2 transformation ---
-    chart_data['tf_values_log2'] = np.log2(chart_data['tf_values'].replace(0, 1e-20))
-    chart_data['tfidf_values_log2'] = np.log2(chart_data['tfidf_values'].replace(0, 1e-20))
+    # Plot the scatter for the entire lexicon (blue)
+    fig.add_trace(go.Scatter(
+        x=combined_df['tf'],
+        y=combined_df['tfidf'],
+        mode='markers',
+        marker=dict(color='Blue', opacity=0.5, size=8),
+        name='Lexicon',
+        hovertext=combined_df.index.tolist(),
+        hovertemplate='<b>%{hovertext}</b><br>TF: %{x}<br>TF-IDF: %{y}<extra></extra>'
+    ))
 
-    # --- THE CORRECT FIX: Filter the DataFrame to set the axis range ---
-    # Define the log-transformed ranges
-    x_min_log2, x_max_log2 = -16, -5
-    y_min_log2, y_max_log2 = -8, 2
-    
-    # Filter the DataFrame to the desired ranges
-    filtered_chart_data = chart_data[
-        (chart_data['tf_values_log2'] >= x_min_log2) &
-        (chart_data['tf_values_log2'] <= x_max_log2) &
-        (chart_data['tfidf_values_log2'] >= y_min_log2) &
-        (chart_data['tfidf_values_log2'] <= y_max_log2)
-    ].copy()
+    # Plot the keywords (red)
+    keywords_df = combined_df[combined_df.index.isin(words)]
+    if not keywords_df.empty:
+        fig.add_trace(go.Scatter(
+            x=keywords_df['tf'],
+            y=keywords_df['tfidf'],
+            mode='markers',
+            marker=dict(color='Red', opacity=0.8, size=10),
+            name='Keywords',
+            hovertext=keywords_df.index.tolist(),
+            hovertemplate='<b>%{hovertext}</b><br>TF: %{x}<br>TF-IDF: %{y}<extra></extra>'
+        ))
 
-    st.scatter_chart(
-        filtered_chart_data,
-        x="tf_values_log2",
-        y="tfidf_values_log2",
-        color="color_coding"
+    # Add percentile-based quadrant lines (dashed black)
+    fig.add_shape(type="line", x0=x_thresh, y0=0, x1=x_thresh, y1=1,
+                  yref='paper', line=dict(color='black', dash='dash', width=1.5))
+    fig.add_shape(type="line", x0=0, x1=1, xref='paper', y0=y_thresh, y1=y_thresh,
+                  line=dict(color='black', dash='dash', width=1.5))
+
+    # Add text annotations for keywords
+    for word in words:
+        if word in keywords_df.index:
+            fig.add_annotation(
+                x=keywords_df.loc[word, 'tf'],
+                y=keywords_df.loc[word, 'tfidf'],
+                text=word.upper().replace(' ', '<br>'),
+                showarrow=True,
+                font=dict(color="Red", size=9),
+                arrowhead=1,
+                ax=0, ay=-40,
+                xanchor="center", yanchor="middle"
+            )
+
+    # Shaded quadrants
+    fig.add_vrect(x0=x_thresh, x1=1, xref='paper', y0=y_thresh, y1=1, yref='paper',
+                  fillcolor='#2ca02c', opacity=0.05, layer="below")
+    fig.add_vrect(x0=0, x1=x_thresh, xref='paper', y0=y_thresh, y1=1, yref='paper',
+                  fillcolor='#ff7f0e', opacity=0.05, layer="below")
+    fig.add_vrect(x0=x_thresh, x1=1, xref='paper', y0=0, y1=y_thresh, yref='paper',
+                  fillcolor='#1f77b4', opacity=0.05, layer="below")
+    fig.add_vrect(x0=0, x1=x_thresh, xref='paper', y0=0, y1=y_thresh, yref='paper',
+                  fillcolor='#7f7f7f', opacity=0.05, layer="below")
+
+    # Layout updates
+    fig.update_layout(
+        title=f"{region.title()} {year}: TF vs TF-IDF (90th Percentile Thresholds)",
+        xaxis_title="←  Normalized TF  →  ",
+        yaxis_title="←  TF-IDF  →  ",
+        xaxis_type='log',
+        yaxis_type='log',
+        xaxis=dict(range=[-16, -6]), # Example log range
+        yaxis=dict(range=[-7, 2]),   # Example log range
+        hovermode="closest",
+        legend_title_text='Trace',
+        template='plotly_white',
     )
+
+    return fig
