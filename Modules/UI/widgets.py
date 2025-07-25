@@ -32,3 +32,5 @@ def show_tfidf_widgets(conferences, tf_dfs):
             "Select KeyWords", options=available_words, 
             default=['generative ai', 'ai', 'machine learning', 'llm']
         )
+
+    return region_key, start_year, end_year, keywords_input
