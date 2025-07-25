@@ -36,11 +36,10 @@ available_words= tf_dfs['annual'][0].index.values
 # Conference sort
 conferences = sorted([r for r in available_regions if r != 'International'])
 conferences = ['International'] + conferences
-available_years = sorted(tf_dfs['annual'][0].columns.values.tolist())
 
 
 # --- CREATE THE TWO-COLUMN LAYOUT for the Widget section---
-show_tfidf_widgets()
+show_tfidf_widgets(conferences, tf_dfs)
 
 # --- Display the Plot below the columns ---
 st.markdown("---")
