@@ -44,6 +44,7 @@ region_key, start_year, end_year, keywords_input = show_tfidf_widgets(conference
 st.markdown("---")
 st.markdown("### 📈 TF-IDF vs. Normalized TF")
 
+plot_col1, plot_col2 = st.columns(2)
 with plot_col1:
     st.subheader("Chart for {}".format(start_year))
     semmantic_drift_plot_matplotlib(
