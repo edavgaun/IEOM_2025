@@ -1,12 +1,6 @@
-# Layout: logo + title side by side
-    col1, col2 = st.columns([1, 6])
-    
-    with col1:
-        st.image("assets/UP logo.jpg", width=80)
-        
-    with col2:
-        st.title(text_title)
-        st.caption("📘 Developed for: *Business Intelligence (Graduate Level)*")
-        st.caption("Instructor: Edgar Avalos-Gauna (2025), Universidad Panamericana")
-        st.caption("📊 Dataset Source: [Yelp Academic Dataset](https://business.yelp.com/data/resources/open-dataset/)")
-        
+import streamlit as st
+
+def show_header(text_title):
+    st.title(text_title)
+    st.caption("📘 Based on: Edgar Avalos-Gauna (2025), *15 Years of IEOM Proceedings*")
+    st.caption("Avalos-Gauna, E. (2025). *Tracing AI and Supply Chain Emphasis Across the Global IEOM Landscape, A Meta-Analysis Under Global Uncertainty*. 2nd IEOM World Congress on Industrial Engineering and Operations Management, Windsor, Ontario, Canada, October 14–16, 2025")
