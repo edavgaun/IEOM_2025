@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-
 from Modules.Charts.plot_umap import plot_umap_scatter
 from Modules.Charts.add_centroids import add_centroids_to_umap
 from Modules.UI.layout_config import set_layout
