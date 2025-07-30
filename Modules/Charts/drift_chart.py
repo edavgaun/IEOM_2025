@@ -86,7 +86,7 @@ def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
     )
     fig.update_yaxes(
         type='log',
-        range=[np.log10(2**-7), np.log10(2**2)],
+        range=[np.log10(2**-7), np.log10(2**3)],
         tickvals=y_ticks,
         ticktext=y_labels,
         title_text="←  TF-IDF  →",
