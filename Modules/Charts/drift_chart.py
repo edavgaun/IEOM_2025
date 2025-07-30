@@ -113,10 +113,10 @@ def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
                        font=dict(size=fz, color='#1f77b4'), showarrow=False)
 
     # Axis-side labels
-    fig.add_annotation(xref="paper", yref="paper", x=0.075, y=0.0001,
+    fig.add_annotation(xref="paper", yref="paper", x=0.075, y=-0.01,
                        text="Low<br>Frquency<br>Tokens", showarrow=False,
                        font=dict(size=fz-2, color='#7f7f7f'), align='center')
-    fig.add_annotation(xref="paper", yref="paper", x=0.975, y=0.0001,
+    fig.add_annotation(xref="paper", yref="paper", x=0.975, y=-0.01,
                        text="High<br>Frquency<br>Tokens", showarrow=False,
                        font=dict(size=fz-2, color='#7f7f7f'), align='center')
     fig.add_annotation(xref="paper", yref="paper", x=0.0025, y=0.05,
