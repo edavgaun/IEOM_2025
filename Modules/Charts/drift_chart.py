@@ -6,8 +6,14 @@ import streamlit as st
 def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
                                  words=['generative ai', 'ai', 'machine learning', 'llm'],
                                  fz=12, debug=False):
-    x_raw = tf_dfs[region][0][year]
-    y_raw = tf_idfs[region][year]
+    try:
+        x_raw = tf_dfs[region][0][year]
+        y_raw = tf_idfs[region][year]
+    except (KeyError, IndexError, TypeError) as e:
+        if debug:
+            st.warning(f"[DEBUG] Missing data for region '{region}' or year '{year}': {e}")
+        return go.Figure()
+
     
     # Filter each Series independently to remove zero values
     x_nonzero = x_raw[x_raw > 0]
