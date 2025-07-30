@@ -112,7 +112,7 @@ def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
         width=800,
         height=700,
         font=dict(size=fz),
-        legend=dict(x=0.85, y=0.5),
+        legend=dict(x=0.84, y=0.5),
         hovermode='closest'
     )
 
