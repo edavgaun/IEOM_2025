@@ -41,8 +41,7 @@ def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
     threshold = 2**-17
     keyword_index = [
         w for w in x.index.intersection(words)
-        if x[w] > threshold and y[w] > threshold
-    ]
+        if x[w] > threshold]
     kw_x = x.loc[keyword_index]
     kw_y = y.loc[keyword_index]
 
