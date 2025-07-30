@@ -93,7 +93,7 @@ def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
 
     fig.update_xaxes(
     type='log',
-    range=[np.log10(2**-16), np.log10(2**-6)],
+    range=[np.log10(2**-17), np.log10(2**-6)],
         tickvals=x_ticks,
         ticktext=x_labels,
         title_text="←  Normalized TF  →",
@@ -112,7 +112,7 @@ def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
         width=800,
         height=700,
         font=dict(size=fz),
-        legend=dict(x=0.85, y=0.05),
+        legend=dict(x=0.8, y=0.5),
         hovermode='closest'
     )
 
@@ -133,10 +133,10 @@ def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
     fig.add_annotation(xref="paper", yref="paper", x=0.95, y=0.0025,
                        text="High<br>Frquency<br>Tokens", showarrow=False,
                        font=dict(size=fz-2, color='#7f7f7f'), align='center')
-    fig.add_annotation(xref="paper", yref="paper", x=0.04, y=0.08,
+    fig.add_annotation(xref="paper", yref="paper", x=0.015, y=0.05,
                        text="Low<br>Distinctive<br>Tokens", showarrow=False,
                        font=dict(size=fz-2, color='#7f7f7f'), align='center', textangle=-90)
-    fig.add_annotation(xref="paper", yref="paper", x=0.05, y=0.85,
+    fig.add_annotation(xref="paper", yref="paper", x=0.015, y=0.95,
                        text="High<br>Distinctive<br>Tokens", showarrow=False,
                        font=dict(size=fz-2, color='#7f7f7f'), align='center', textangle=-90)
 
