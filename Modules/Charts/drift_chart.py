@@ -103,13 +103,13 @@ def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
     )
 
     # Quadrant titles
-    fig.add_annotation(xref="paper", yref="paper", x=0.2, y=0.99, text="Rare but Telling",
+    fig.add_annotation(xref="paper", yref="paper", x=0.35, y=0.99, text="Rare but Telling",
                        font=dict(size=fz, color='#ff7f0e'), showarrow=False)
     fig.add_annotation(xref="paper", yref="paper", x=0.95, y=0.99, text="Frequent + Distinctive",
                        font=dict(size=fz, color='#2ca02c'), showarrow=False)
-    fig.add_annotation(xref="paper", yref="paper", x=0.3, y=0.15, text="Noise",
+    fig.add_annotation(xref="paper", yref="paper", x=0.45, y=0.05, text="Noise",
                        font=dict(size=fz, color='#7f7f7f'), showarrow=False)
-    fig.add_annotation(xref="paper", yref="paper", x=0.95, y=0.15, text="Generic but Common",
+    fig.add_annotation(xref="paper", yref="paper", x=0.95, y=0.05, text="Generic but Common",
                        font=dict(size=fz, color='#1f77b4'), showarrow=False)
 
     # Axis-side labels
