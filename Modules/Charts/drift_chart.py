@@ -16,6 +16,7 @@ def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
     common_index = x_raw.index.intersection(y_raw.index)
     x = x_raw.loc[common_index]
     y = y_raw.loc[common_index]
+    st.write(len(x), len(y))
 
     if x.empty or y.empty:
         if debug:
