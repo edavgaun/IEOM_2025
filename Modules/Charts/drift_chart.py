@@ -107,7 +107,7 @@ def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
     )
 
     fig.update_layout(
-        title=f"Annual {year}: TF vs TF-IDF (90th Percentile Thresholds)",
+        title=f"{region.title()} {year}: TF vs TF-IDF (90th Percentile Thresholds)",
         template="simple_white",
         width=800,
         height=700,
