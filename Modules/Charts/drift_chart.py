@@ -4,18 +4,30 @@ import plotly.graph_objects as go
 import streamlit as st
 
 def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
-                          words=['generative ai', 'ai', 'machine learning', 'llm'],
-                          fz=12):
-    # Extract data
-    x = tf_dfs[region][0][year].replace(0, 1e-20)
-    y = tf_idfs[region][year].replace(0, 1e-20)
+                                 words=['generative ai', 'ai', 'machine learning', 'llm'],
+                                 fz=12, debug=False):
+    # Safely extract and align TF and TF-IDF data
+    try:
+        x_raw = tf_dfs[region][0][year].replace(0, 1e-20)
+        y_raw = tf_idfs[region][year].replace(0, 1e-20)
+    except KeyError:
+        return go.Figure()
+
+    common_index = x_raw.index.intersection(y_raw.index)
+    x = x_raw.loc[common_index]
+    y = y_raw.loc[common_index]
+
+    if x.empty or y.empty:
+        if debug:
+            print(f"[DEBUG] Empty data for region: {region}, year: {year}")
+        return go.Figure()
 
     x_thresh = np.percentile(x, 90)
     y_thresh = np.percentile(y, 90)
 
     fig = go.Figure()
 
-    # Lexicon
+    # Base Lexicon scatter
     fig.add_trace(go.Scatter(
         x=x, y=y,
         mode='markers',
@@ -25,31 +37,31 @@ def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
         hovertemplate="<b>%{text}</b><br>TF=%{x}<br>TF-IDF=%{y}<extra></extra>"
     ))
 
-    # Keywords
-    kw_x = x.loc[x.index.intersection(words)]
-    kw_y = y.loc[y.index.intersection(words)]
+    # Keyword highlights
+    keyword_index = x.index.intersection(words)
+    kw_x = x.loc[keyword_index]
+    kw_y = y.loc[keyword_index]
 
     fig.add_trace(go.Scatter(
         x=kw_x, y=kw_y,
-        mode='markers+text',
+        mode='markers',
         name='Keywords',
-        marker=dict(color='Red', size=9),
-        text=[w.upper().replace(' ', '\n') for w in kw_x.index],
-        textposition='top center',
+        marker=dict(color='red', size=9),
+        text=[w.upper().replace(' ', '\n') for w in keyword_index],
         hovertemplate="<b>%{text}</b><br>TF=%{x}<br>TF-IDF=%{y}<extra></extra>"
     ))
 
-    # Annotated arrows for keywords
+    # Arrow annotations
     for i, word in enumerate(words):
         if word in kw_x.index:
             fig.add_annotation(
                 x=kw_x[word],
                 y=kw_y[word],
-                ax=kw_x[word] + ((-1)**(i+1)) * 2**-7,
-                ay=kw_y[word] + ((-1)**i) * 2**-5,
+                ax=kw_x[word] + ((-1) ** (i + 1)) * 2 ** -7,
+                ay=kw_y[word] + ((-1) ** i) * 2 ** -5,
                 text=word.upper().replace(' ', '<br>'),
                 showarrow=True,
-                arrowhead=1,
+                arrowhead=2,
                 arrowsize=1,
                 arrowwidth=1.5,
                 arrowcolor='red',
@@ -63,7 +75,7 @@ def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
     fig.add_shape(type="line", y0=y_thresh, y1=y_thresh, x0=2**-16, x1=2**-6,
                   line=dict(color="black", dash="dash", width=1.25))
 
-    # Shaded quadrants
+    # Quadrant shading
     fig.add_shape(type="rect", x0=x_thresh, x1=2**-6, y0=y_thresh, y1=2**2,
                   fillcolor="#2ca02c", opacity=0.05, layer="below", line_width=0)
     fig.add_shape(type="rect", x0=2**-16, x1=x_thresh, y0=y_thresh, y1=2**2,
@@ -73,52 +85,59 @@ def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
     fig.add_shape(type="rect", x0=2**-16, x1=x_thresh, y0=2**-7, y1=y_thresh,
                   fillcolor="#7f7f7f", opacity=0.05, layer="below", line_width=0)
 
-    # Axis config
+    # Axis ticks: base-2 labels
+    x_ticks = [2**i for i in range(-16, -5)]
+    x_labels = [f"2^{i}" for i in range(-16, -5)]
+    y_ticks = [2**i for i in range(-7, 3)]
+    y_labels = [f"2^{i}" for i in range(-7, 3)]
+
     fig.update_xaxes(
-        type='log', title_text="←  Normalized TF  →",
-        range=[np.log2(2**-16), np.log2(2**-6)],
-        tickvals=[2**i for i in range(-16, -5)],
-        tickformat=".1e"
+        type='log',
+        range=[-16, -6],
+        tickvals=x_ticks,
+        ticktext=x_labels,
+        title_text="←  Normalized TF  →",
     )
     fig.update_yaxes(
-        type='log', title_text="←  TF-IDF  →",
-        range=[np.log2(2**-7), np.log2(2**2)],
-        tickvals=[2**i for i in range(-7, 3)],
-        tickformat=".1e"
+        type='log',
+        range=[-7, 2],
+        tickvals=y_ticks,
+        ticktext=y_labels,
+        title_text="←  TF-IDF  →",
     )
 
-    # Titles and quadrant labels
     fig.update_layout(
         title=f"Annual {year}: TF vs TF-IDF (90th Percentile Thresholds)",
         template="simple_white",
-        legend=dict(x=0.85, y=0.05),
-        font=dict(size=fz),
         width=800,
-        height=700
+        height=700,
+        font=dict(size=fz),
+        legend=dict(x=0.85, y=0.05),
+        hovermode='closest'
     )
 
-    # Quadrant labels
+    # Quadrant titles
     fig.add_annotation(xref="paper", yref="paper", x=0.13, y=0.86, text="Rare but Telling",
-                       font=dict(size=fz, color='#ff7f0e', family='Arial'), showarrow=False)
+                       font=dict(size=fz, color='#ff7f0e'), showarrow=False)
     fig.add_annotation(xref="paper", yref="paper", x=0.87, y=0.86, text="Frequent + Distinctive",
-                       font=dict(size=fz, color='#2ca02c', family='Arial'), showarrow=False)
+                       font=dict(size=fz, color='#2ca02c'), showarrow=False)
     fig.add_annotation(xref="paper", yref="paper", x=0.13, y=0.11, text="Noise",
-                       font=dict(size=fz, color='#7f7f7f', family='Arial'), showarrow=False)
+                       font=dict(size=fz, color='#7f7f7f'), showarrow=False)
     fig.add_annotation(xref="paper", yref="paper", x=0.87, y=0.11, text="Generic but Common",
-                       font=dict(size=fz, color='#1f77b4', family='Arial'), showarrow=False)
+                       font=dict(size=fz, color='#1f77b4'), showarrow=False)
 
-    # Corner labels (italic)
+    # Axis-side labels
     fig.add_annotation(xref="paper", yref="paper", x=0.125, y=0.005,
                        text="Low<br>Frquency<br>Tokens", showarrow=False,
-                       font=dict(size=fz-2, color='#7f7f7f', family='Arial'), align='center')
+                       font=dict(size=fz-2, color='#7f7f7f'), align='center')
     fig.add_annotation(xref="paper", yref="paper", x=0.875, y=0.005,
                        text="High<br>Frquency<br>Tokens", showarrow=False,
-                       font=dict(size=fz-2, color='#7f7f7f', family='Arial'), align='center')
+                       font=dict(size=fz-2, color='#7f7f7f'), align='center')
     fig.add_annotation(xref="paper", yref="paper", x=0.04, y=0.08,
                        text="Low<br>Distinctive<br>Tokens", showarrow=False,
-                       font=dict(size=fz-2, color='#7f7f7f', family='Arial'), align='center', textangle=-90)
+                       font=dict(size=fz-2, color='#7f7f7f'), align='center', textangle=-90)
     fig.add_annotation(xref="paper", yref="paper", x=0.05, y=0.85,
                        text="High<br>Distinctive<br>Tokens", showarrow=False,
-                       font=dict(size=fz-2, color='#7f7f7f', family='Arial'), align='center', textangle=-90)
+                       font=dict(size=fz-2, color='#7f7f7f'), align='center', textangle=-90)
 
     return fig
