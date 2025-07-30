@@ -44,30 +44,12 @@ def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
 
     fig.add_trace(go.Scatter(
         x=kw_x, y=kw_y,
-        mode='markers',
+        mode='markers + text',
         name='Keywords',
         marker=dict(color='red', size=9),
         text=[w.upper().replace(' ', '\n') for w in keyword_index],
         hovertemplate="<b>%{text}</b><br>TF=%{x}<br>TF-IDF=%{y}<extra></extra>"
     ))
-
-    # Arrow annotations
-    for i, word in enumerate(words):
-        if word in kw_x.index:
-            fig.add_annotation(
-                x=kw_x[word],
-                y=kw_y[word],
-                ax=kw_x[word] + ((-1) ** (i + 1)) * 2 ** -7,
-                ay=kw_y[word] + ((-1) ** i) * 2 ** -5,
-                text=word.upper().replace(' ', '<br>'),
-                showarrow=True,
-                arrowhead=2,
-                arrowsize=1,
-                arrowwidth=1.5,
-                arrowcolor='red',
-                font=dict(color='red', size=fz-2),
-                align='center'
-            )
 
     # Quadrant lines
     fig.add_shape(type="line", x0=x_thresh, x1=x_thresh, y0=2**-7, y1=2**2,
@@ -77,13 +59,13 @@ def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
 
     # Quadrant shading
     fig.add_shape(type="rect", x0=x_thresh, x1=2**-6, y0=y_thresh, y1=2**2,
-                  fillcolor="#2ca02c", opacity=0.05, layer="below", line_width=0)
+                  fillcolor="#2ca02c", opacity=0.025, layer="below", line_width=0)
     fig.add_shape(type="rect", x0=2**-16, x1=x_thresh, y0=y_thresh, y1=2**2,
-                  fillcolor="#ff7f0e", opacity=0.05, layer="below", line_width=0)
+                  fillcolor="#ff7f0e", opacity=0.025, layer="below", line_width=0)
     fig.add_shape(type="rect", x0=x_thresh, x1=2**-6, y0=2**-7, y1=y_thresh,
-                  fillcolor="#1f77b4", opacity=0.05, layer="below", line_width=0)
+                  fillcolor="#1f77b4", opacity=0.025, layer="below", line_width=0)
     fig.add_shape(type="rect", x0=2**-16, x1=x_thresh, y0=2**-7, y1=y_thresh,
-                  fillcolor="#7f7f7f", opacity=0.05, layer="below", line_width=0)
+                  fillcolor="#7f7f7f", opacity=0.025, layer="below", line_width=0)
 
     # Axis ticks: base-2 labels
     x_ticks = [2**i for i in range(-16, -5)]
