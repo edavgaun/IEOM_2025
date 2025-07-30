@@ -3,7 +3,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
-def semantic_drift_plotly(region, year, tf_dfs, tf_idfs,
+def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
                           words=['generative ai', 'ai', 'machine learning', 'llm'],
                           fz=12):
     # Extract data
