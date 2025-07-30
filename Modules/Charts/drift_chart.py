@@ -118,11 +118,11 @@ def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
 
     # Quadrant titles
     fig.add_annotation(xref="paper", yref="paper", x=0.15, y=0.95, text="Rare but Telling",
-                       font=dict(size=fz, color='#ff7f0e'), showarrow=False)
+                       font=dict(size=fz, color='#ff7f0e', ha='right'), showarrow=False)
     fig.add_annotation(xref="paper", yref="paper", x=0.9, y=0.95, text="Frequent + Distinctive",
                        font=dict(size=fz, color='#2ca02c'), showarrow=False)
     fig.add_annotation(xref="paper", yref="paper", x=0.15, y=0.15, text="Noise",
-                       font=dict(size=fz, color='#7f7f7f'), showarrow=False)
+                       font=dict(size=fz, color='#7f7f7f', ha='right'), showarrow=False)
     fig.add_annotation(xref="paper", yref="paper", x=0.9, y=0.15, text="Generic but Common",
                        font=dict(size=fz, color='#1f77b4'), showarrow=False)
 
