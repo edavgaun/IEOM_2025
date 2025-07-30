@@ -62,9 +62,9 @@ def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
                   line=dict(color="black", dash="dash", width=1.25))
 
     # Quadrant shading
-    fig.add_shape(type="rect", x0=x_thresh, x1=2**-6, y0=y_thresh, y1=2**2,
+    fig.add_shape(type="rect", x0=x_thresh, x1=2**-6, y0=y_thresh, y1=2**3,
                   fillcolor="#2ca02c", opacity=0.05, layer="below", line_width=0)
-    fig.add_shape(type="rect", x0=2**-16, x1=x_thresh, y0=y_thresh, y1=2**2,
+    fig.add_shape(type="rect", x0=2**-16, x1=x_thresh, y0=y_thresh, y1=2**3,
                   fillcolor="#ff7f0e", opacity=0.05, layer="below", line_width=0)
     fig.add_shape(type="rect", x0=x_thresh, x1=2**-6, y0=2**-7, y1=y_thresh,
                   fillcolor="#1f77b4", opacity=0.05, layer="below", line_width=0)
