@@ -11,7 +11,7 @@ def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
         y_raw = tf_idfs[region][year]
     except (KeyError, IndexError, TypeError) as e:
         if debug:
-            st.warning(f"[DEBUG] Missing data for region '{region}' or year '{year}': {e}")
+            st.write(f"**No data available for region '{region}' and year '{year}'.**")
         return go.Figure()
 
     
