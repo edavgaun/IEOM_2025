@@ -6,7 +6,7 @@ import streamlit as st
 def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
                                  words=['generative ai', 'ai', 'machine learning', 'llm'],
                                  fz=12, debug=False):
-    # Safely extract and align TF and TF-IDF data
+                                   
     try:
         x_raw = tf_dfs[region][0][year].replace(0, 1e-20)
         y_raw = tf_idfs[region][year].replace(0, 1e-20)
@@ -63,13 +63,13 @@ def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
 
     # Quadrant shading
     fig.add_shape(type="rect", x0=x_thresh, x1=2**-6, y0=y_thresh, y1=2**2,
-                  fillcolor="#2ca02c", opacity=0.025, layer="below", line_width=0)
+                  fillcolor="#2ca02c", opacity=0.05, layer="below", line_width=0)
     fig.add_shape(type="rect", x0=2**-16, x1=x_thresh, y0=y_thresh, y1=2**2,
-                  fillcolor="#ff7f0e", opacity=0.025, layer="below", line_width=0)
+                  fillcolor="#ff7f0e", opacity=0.05, layer="below", line_width=0)
     fig.add_shape(type="rect", x0=x_thresh, x1=2**-6, y0=2**-7, y1=y_thresh,
-                  fillcolor="#1f77b4", opacity=0.025, layer="below", line_width=0)
+                  fillcolor="#1f77b4", opacity=0.05, layer="below", line_width=0)
     fig.add_shape(type="rect", x0=2**-16, x1=x_thresh, y0=2**-7, y1=y_thresh,
-                  fillcolor="#7f7f7f", opacity=0.025, layer="below", line_width=0)
+                  fillcolor="#7f7f7f", opacity=0.05, layer="below", line_width=0)
 
     # Axis ticks: base-2 labels
     x_ticks = [2**i for i in range(-16, -5)]
