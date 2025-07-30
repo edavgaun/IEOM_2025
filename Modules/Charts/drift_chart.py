@@ -6,14 +6,17 @@ import streamlit as st
 def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
                                  words=['generative ai', 'ai', 'machine learning', 'llm'],
                                  fz=12, debug=False):
-                                   
-    try:
-        x_raw = tf_dfs[region][0][year].replace(0, 1e-20)
-        y_raw = tf_idfs[region][year].replace(0, 1e-20)
-    except KeyError:
-        return go.Figure()
-
-    common_index = x_raw.index.intersection(y_raw.index)
+    x_raw = tf_dfs[region][0][year]
+    y_raw = tf_idfs[region][year]
+    
+    # Filter each Series independently to remove zero values
+    x_nonzero = x_raw[x_raw > 0]
+    y_nonzero = y_raw[y_raw > 0]
+    
+    # Find shared non-zero tokens
+    common_index = x_nonzero.index.intersection(y_nonzero.index)
+    
+    # Subset both to aligned, valid entries
     x = x_raw.loc[common_index]
     y = y_raw.loc[common_index]
 
@@ -38,10 +41,6 @@ def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
     ))
 
     # Keyword highlights
-    threshold = 2**-17
-    keyword_index = [
-        w for w in x.index.intersection(words)
-        if x[w] > threshold]
     kw_x = x.loc[keyword_index]
     kw_y = y.loc[keyword_index]
 
