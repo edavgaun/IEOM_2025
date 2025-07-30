@@ -41,6 +41,7 @@ def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
     ))
 
     # Keyword highlights
+    keyword_index = list(set(words).intersection(x.index))
     kw_x = x.loc[keyword_index]
     kw_y = y.loc[keyword_index]
 
