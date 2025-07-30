@@ -47,7 +47,7 @@ def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
         mode='markers + text',
         name='Keywords',
         marker=dict(color='red', size=9),
-        textfont=dict(color='red', size=fz-4)
+        textfont=dict(color='red', size=fz-4),
         text=[w.upper().replace(' ', '<br>') for w in keyword_index],
         hovertemplate="<b>%{text}</b><br>TF=%{x}<br>TF-IDF=%{y}<extra></extra>"
     ))
