@@ -24,7 +24,7 @@ def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
 
     x_thresh = np.percentile(x, 90)
     y_thresh = np.percentile(y, 90)
-    st.write(x_thresh, y_thresh)
+
     fig = go.Figure()
 
     # Base Lexicon scatter
@@ -92,15 +92,15 @@ def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
     y_labels = [f"2^{i}" for i in range(-7, 3)]
 
     fig.update_xaxes(
-        type='log',
-        range=[-16, -6],
+    type='log',
+    range=[np.log10(2**-16), np.log10(2**-6)],
         tickvals=x_ticks,
         ticktext=x_labels,
         title_text="←  Normalized TF  →",
     )
     fig.update_yaxes(
         type='log',
-        range=[-7, 2],
+        range=[np.log10(2**-7), np.log10(2**2)],
         tickvals=y_ticks,
         ticktext=y_labels,
         title_text="←  TF-IDF  →",
