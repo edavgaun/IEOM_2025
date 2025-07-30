@@ -56,7 +56,7 @@ def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
     ))
 
     # Quadrant lines
-    fig.add_shape(type="line", x0=x_thresh, x1=x_thresh, y0=2**-7, y1=2**2,
+    fig.add_shape(type="line", x0=x_thresh, x1=x_thresh, y0=2**-7, y1=2**3,
                   line=dict(color="black", dash="dash", width=1.25))
     fig.add_shape(type="line", y0=y_thresh, y1=y_thresh, x0=2**-16, x1=2**-6,
                   line=dict(color="black", dash="dash", width=1.25))
