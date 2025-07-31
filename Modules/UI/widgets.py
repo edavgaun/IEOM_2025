@@ -31,7 +31,14 @@ def show_tfidf_widgets(conferences, tf_dfs):
         st.markdown("### 🔍 Keywords to Highlight")
         keywords_input = st.multiselect(
             "Select KeyWords", options=available_words, 
-            default=['generative ai', 'ai', 'machine learning', 'llm']
+            default=[
+                   'generative ai', 'ai', 'machine learning', 'llm', 'reinforcement learning',
+                   'covid', 'management', 'leadership', 'ethic', 'ethical', 'uncertainty', 'resilience',
+                   'supply chain', 'smart logistics', 'logistics', 'lean manufacturing', 'green supply chain',
+                   'six sigma', 'tqm', 'agile', 'optimization', 'warehouse layout', 
+                   'simulation', 'sustainability', 'digital transformation',
+                   'digital twin', 'blockchain', 'iot', 'internet thing', 'data', 'big data', 'cloud computing',
+                 ]
         )
 
     return region_key, start_year, end_year, keywords_input
