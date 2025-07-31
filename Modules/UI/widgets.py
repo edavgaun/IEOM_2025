@@ -31,14 +31,30 @@ def show_tfidf_widgets(conferences, tf_dfs):
         st.markdown("### 🔍 Keywords to Highlight")
         keywords_input = st.multiselect(
             "Select KeyWords", options=available_words, 
-            default=[
-                   'generative ai', 'ai', 'machine learning', 'llm', 'reinforcement learning',
-                   'covid', 'management', 'leadership', 'ethic', 'ethical', 'uncertainty', 'resilience',
-                   'supply chain', 'smart logistics', 'logistics', 'lean manufacturing', 'green supply chain',
-                   'six sigma', 'tqm', 'agile', 'optimization', 'warehouse layout', 
-                   'simulation', 'sustainability', 'digital transformation',
-                   'digital twin', 'blockchain', 'iot', 'internet thing', 'data', 'big data', 'cloud computing',
-                 ]
+            default=selected_keywords = [
+                                        # AI & Machine Learning
+                                        "generative ai", "ai", "machine learning", "llm", "reinforcement learning",
+                                        "deep learning", "neural networks", "computer vision", "natural language processing",
+                                        # Supply Chain & Logistics
+                                        "supply chain", "smart logistics", "logistics", "lean manufacturing", "green supply chain",
+                                        "six sigma", "tqm", "agile", "warehouse layout", "inventory management", "circular economy",       
+                                        # Digital Transformation & Technologies
+                                        "digital transformation", "digital twin", "blockchain", "iot", "internet thing",
+                                        "cloud computing", "automation", "digital", "digital thread",
+                                        # Data & Analytics
+                                        "data", "big data", "clustering", "data analytics", "business intelligence",
+                                        "data-driven", "data governance", "analytics maturity",
+                                        # Optimization & Modeling
+                                        "optimization", "simulation", "linear programming", "queuing theory",
+                                        # Human & Management
+                                        "management", "leadership", "ethic", "ethical", "kpis", "education",
+                                        # Sustainability & Resilience
+                                        "sustainability", "carbon footprint", "energy efficiency", "sustainable development",
+                                        "green manufacturing", "resilience", "uncertainty",
+                                        # Domain-Specific
+                                        "covid", "healthcare", 'ukraine', 'suez', 'trade war', 'panama'
+                                    ]
+
         )
 
     return region_key, start_year, end_year, keywords_input
