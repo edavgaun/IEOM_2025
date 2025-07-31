@@ -35,6 +35,7 @@ available_regions = [r.title() if r!='annual' else 'International' for r in tf_d
 # Conference sort
 conferences = sorted([r for r in available_regions if r != 'International'])
 conferences = ['International'] + conferences
+conferences.remove('Gcc')
 
 
 # --- CREATE THE TWO-COLUMN LAYOUT for the Widget section---
