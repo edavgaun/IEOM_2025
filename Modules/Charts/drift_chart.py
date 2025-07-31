@@ -4,7 +4,14 @@ import plotly.graph_objects as go
 import streamlit as st
 
 def semmantic_drift_plot_plotly(region, year, tf_dfs, tf_idfs,
-                                 words=['generative ai', 'ai', 'machine learning', 'llm'],
+                                 words=[
+                                   'generative ai', 'ai', 'machine learning', 'llm', 'reinforcement learning',
+                                   'covid', 'management', 'leadership', 'ethic', 'ethical', 'uncertainty', 'resilience',
+                                   'supply chain', 'smart logistics', 'logistics', 'lean manufacturing', 'green supply chain',
+                                   'six sigma', 'tqm', 'agile', 'optimization', 'warehouse layout', 
+                                   'simulation', 'sustainability', 'digital transformation',
+                                   'digital twin', 'blockchain', 'iot', 'internet thing', 'data', 'big data', 'cloud computing',
+                                 ],
                                  fz=12, debug=False):
     try:
         x_raw = tf_dfs[region][0][year]
