@@ -32,27 +32,27 @@ def show_tfidf_widgets(conferences, tf_dfs):
         keywords_input = st.multiselect(
             "Select KeyWords", options=available_words, 
             default=[
-                    # AI & Machine Learning #"neural networks",
+                    # AI & Machine Learning
                     "generative ai", "ai", "machine learning", "llm", "reinforcement learning",
-                    "deep learning", "computer vision", "natural language processing",
+                    "deep learning", "computer vision", "natural language processing", "neural network",
                     # Supply Chain & Logistics
                     "supply chain", "smart logistics", "logistics", "lean manufacturing", "green supply chain",
                     "six sigma", "tqm", "agile", "warehouse layout", "inventory management", "circular economy",       
                     # Digital Transformation & Technologies
                     "digital transformation", "digital twin", "blockchain", "iot", "internet thing",
-                    #"cloud computing", "automation", "digital", "digital thread",
+                    "cloud computing", "automation", "digital",
                     # Data & Analytics
-                    #"data", "big data", "clustering", "data analytics", "business intelligence",
-                    #"data-driven", "data governance", "analytics maturity",
+                    "data", "big data", "clustering", "data analytics", "business intelligence",
+                    "data driven", "predictive analytics",
                     # Optimization & Modeling
-                    #"optimization", "simulation", "linear programming", "queuing theory",
+                    "optimization", "simulation", "linear programming", "queuing theory",
                     # Human & Management
-                    #"management", "leadership", "ethic", "ethical", "kpis", "education",
+                    "management", "leadership", "ethic", "ethical", "kpis", "education",
                     # Sustainability & Resilience
-                    #"sustainability", "carbon footprint", "energy efficiency", "sustainable development",
+                    "sustainability", "carbon footprint", "energy",
                     #"green manufacturing", "resilience", "uncertainty",
                     # Domain-Specific
-                    #"covid", "healthcare", 'ukraine', 'suez', 'trade war', 'panama'
+                    #"covid", "healthcare",
                 ]
 
         )
