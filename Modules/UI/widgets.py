@@ -36,7 +36,7 @@ def show_tfidf_widgets(conferences, tf_dfs):
                     "generative ai", "ai", "machine learning", "llm", "reinforcement learning",
                     "deep learning", "computer vision", "natural language processing",
                     # Supply Chain & Logistics
-                    #"supply chain", "smart logistics", "logistics", "lean manufacturing", "green supply chain",
+                    "supply chain", "smart logistics", "logistics", "lean manufacturing", "green supply chain",
                     #"six sigma", "tqm", "agile", "warehouse layout", "inventory management", "circular economy",       
                     # Digital Transformation & Technologies
                     #"digital transformation", "digital twin", "blockchain", "iot", "internet thing",
