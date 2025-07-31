@@ -52,7 +52,7 @@ def show_tfidf_widgets(conferences, tf_dfs):
                     "sustainability", "carbon footprint", "energy",
                     #"green manufacturing", "resilience", "uncertainty",
                     # Domain-Specific
-                    #"covid", "healthcare",
+                    #"covid", "healthcare", "tariff"
                 ]
 
         )
