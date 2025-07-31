@@ -39,7 +39,7 @@ def show_tfidf_widgets(conferences, tf_dfs):
                     "supply chain", "smart logistics", "logistics", "lean manufacturing", "green supply chain",
                     "six sigma", "tqm", "agile", "warehouse layout", "inventory management", "circular economy",       
                     # Digital Transformation & Technologies
-                    #"digital transformation", "digital twin", "blockchain", "iot", "internet thing",
+                    "digital transformation", "digital twin", "blockchain", "iot", "internet thing",
                     #"cloud computing", "automation", "digital", "digital thread",
                     # Data & Analytics
                     #"data", "big data", "clustering", "data analytics", "business intelligence",
