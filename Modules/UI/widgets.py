@@ -34,7 +34,7 @@ def show_tfidf_widgets(conferences, tf_dfs):
             default=[
                     # AI & Machine Learning
                     "generative ai", "ai", "machine learning", "llm", "reinforcement learning",
-                    #"deep learning", "neural networks", "computer vision", "natural language processing",
+                    "deep learning", "neural networks", #"computer vision", "natural language processing",
                     # Supply Chain & Logistics
                     #"supply chain", "smart logistics", "logistics", "lean manufacturing", "green supply chain",
                     #"six sigma", "tqm", "agile", "warehouse layout", "inventory management", "circular economy",       
