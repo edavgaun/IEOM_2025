@@ -40,7 +40,7 @@ def show_tfidf_widgets(conferences, tf_dfs):
                     "six sigma", "tqm", "agile", "warehouse layout", "inventory management", "circular economy",       
                     # Digital Transformation & Technologies
                     "digital transformation", "digital twin", "blockchain", "iot", "internet thing",
-                    "cloud computing", "automation", "digital", "digital thread",
+                    #"cloud computing", "automation", "digital", "digital thread",
                     # Data & Analytics
                     #"data", "big data", "clustering", "data analytics", "business intelligence",
                     #"data-driven", "data governance", "analytics maturity",
